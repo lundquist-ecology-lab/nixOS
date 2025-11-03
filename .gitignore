@@ -1,0 +1,16 @@
+# Build outputs
+/result
+
+# Direnv / nix tooling
+/.direnv
+/.devenv
+
+# Editors
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log

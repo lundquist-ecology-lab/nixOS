@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sysc-greet-src = {
-      url = "git+ssh://git@github.com/lundquist-ecology-lab/sysc-greet.git?ref=master";
+      url = "github:lundquist-ecology-lab/sysc-greet/master";
       flake = false;
     };
   };

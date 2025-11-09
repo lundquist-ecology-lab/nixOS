@@ -1,4 +1,11 @@
-{ config, pkgs, unstablePkgs, ... }:
+{ config, pkgs, unstablePkgs ? pkgs, lib, ... }:
+
+let
+  nvmPkg =
+    if pkgs ? nvm then pkgs.nvm
+    else if unstablePkgs ? nvm then unstablePkgs.nvm
+    else null;
+in
 
 {
   home.username = "mlundquist";
@@ -30,17 +37,19 @@
   programs = {
     zsh = {
       enable = true;
-      ohMyZsh = {
+      oh-my-zsh = {
         enable = true;
         theme = "minimal";
         plugins = [
           "git"
         ];
       };
-      autosuggestions.enable = true;
-      syntaxHighlighting.enable = true;
-      history.path = "${config.xdg.dataHome}/zsh/history";
-      histSize = 50000;
+      enableAutosuggestions = true;
+      enableSyntaxHighlighting = true;
+      history = {
+        path = "${config.xdg.dataHome}/zsh/history";
+        size = 50000;
+      };
       initExtraFirst = ''
         export XDG_FILE_MANAGER=thunar
         export PULSE_PROP='media.role=Music'
@@ -62,9 +71,11 @@
         fi
 
         export NVM_DIR="$HOME/.nvm"
-        if [ -f "${pkgs.nvm}/share/nvm/init-nvm.sh" ]; then
-          source "${pkgs.nvm}/share/nvm/init-nvm.sh"
-        fi
+        ${lib.optionalString (nvmPkg != null) ''
+          if [ -f "${nvmPkg}/share/nvm/init-nvm.sh" ]; then
+            source "${nvmPkg}/share/nvm/init-nvm.sh"
+          fi
+        ''}
 
         export PATH="$PYENV_ROOT/bin:$PATH"
         . "$HOME/.local/bin/env"

@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, unstablePkgs, ... }:
+{ inputs, lib, pkgs, unstablePkgs, config, ... }:
 
 let
   inherit (lib) mkIf;
@@ -174,8 +174,8 @@ in
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
+      wireplumber.enable = true;
     };
-    wireplumber.enable = true;
     printing.enable = true;
     avahi = {
       enable = true;
@@ -579,4 +579,4 @@ in
   #   - thundery / thundery-debug, soh-git, soh-otr-exporter
   #   - python packages: moderngl-window, pyglm, pypdf2 (can be added via poetry2nix or mach-nix)
   #   - youtube-dl (yt-dlp already installed)
-};
+}

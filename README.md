@@ -6,15 +6,20 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 ### Disk layout used on *moria*
 
-- Drive: `nvme0n1` (1.8 TB). Keep the Windows/MSR partitions in place:
-  - `nvme0n1p1` – 100 MB EFI System Partition (FAT32) mounted at `/boot`.
-  - `nvme0n1p2` – 16 MB Microsoft Reserved Partition (leave untouched).
-  - `nvme0n1p3` – 1.8 TB Btrfs partition for NixOS (reformat to Btrfs).
-  - `nvme0n1p4` – 849 MB Windows recovery partition (leave untouched).
-- After formatting `nvme0n1p3`, create the subvolumes expected by this repo:
+- Drive: `nvme0n1` (1.8 TB). Wipe the old Windows layout and create a clean GPT table:
+  1. `nvme0n1p1` – 1 GB EFI System Partition (FAT32) mounted at `/boot`.
+  2. `nvme0n1p2` – the remaining space as a single Btrfs partition for NixOS.
+- Suggested commands for a fresh layout (all of these are destructive to the drive):
   ```bash
-  mkfs.btrfs -L moria-root /dev/nvme0n1p3            # destructive!
-  mount /dev/nvme0n1p3 /mnt
+  sgdisk --zap-all /dev/nvme0n1
+  sgdisk -n1:1M:+1G -t1:EF00 -c1:"EFI System Partition" /dev/nvme0n1
+  sgdisk -n2:0:0 -t2:8300 -c2:"NixOS root" /dev/nvme0n1
+  mkfs.vfat -n EFI /dev/nvme0n1p1
+  mkfs.btrfs -L moria-root /dev/nvme0n1p2
+  ```
+- After formatting `nvme0n1p2`, create the subvolumes expected by this repo:
+  ```bash
+  mount /dev/nvme0n1p2 /mnt
   btrfs subvolume create /mnt/@
   btrfs subvolume create /mnt/@home
   btrfs subvolume create /mnt/@nix
@@ -27,11 +32,11 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 1. Boot the installer, set keyboard layout (`loadkeys us`), and confirm networking (`ping nixos.org`).
 2. Mount the Btrfs subvolumes and EFI partition so `/mnt` mirrors the final layout:
    ```bash
-   mount -o subvol=@,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt
+   mount -o subvol=@,compress=zstd,noatime,ssd /dev/nvme0n1p2 /mnt
    mkdir -p /mnt/{boot,home,nix,var/log}
-   mount -o subvol=@home,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt/home
-   mount -o subvol=@nix,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt/nix
-   mount -o subvol=@log,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt/var/log
+   mount -o subvol=@home,compress=zstd,noatime,ssd /dev/nvme0n1p2 /mnt/home
+   mount -o subvol=@nix,compress=zstd,noatime,ssd /dev/nvme0n1p2 /mnt/nix
+   mount -o subvol=@log,compress=zstd,noatime,ssd /dev/nvme0n1p2 /mnt/var/log
    mount /dev/nvme0n1p1 /mnt/boot
    ```
 3. Mount the USB stick that holds `nixos_moria_ed25519` (e.g. `mount /dev/sdX1 /mnt/usb`) and copy the key into the live user’s `~/.ssh` so private repos can be cloned:
@@ -46,7 +51,7 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
    ```bash
    git clone git@github.com-nixos-moria:nixos-moria.git /mnt/etc/nixos
    ```
-5. Generate a fresh hardware config so the new UUIDs for `nvme0n1p3`/`nvme0n1p1` match what NixOS will boot with:
+5. Generate a fresh hardware config so the new UUIDs for `nvme0n1p2`/`nvme0n1p1` match what NixOS will boot with:
    ```bash
    nixos-generate-config --root /mnt
    ```

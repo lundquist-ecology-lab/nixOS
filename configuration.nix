@@ -47,7 +47,30 @@ in
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [ "amd_pstate=active" ];
+    kernelParams = [
+      "amd_pstate=active"
+      "amd_iommu=on"
+      "iommu=pt"
+      "pcie_acs_override=downstream,multifunction"
+      "vfio-pci.ids=10de:2184,10de:1aeb"
+    ];
+    initrd.kernelModules = [
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+      "vfio_virqfd"
+    ];
+    kernelModules = [
+      "kvm-amd"
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+      "vfio_virqfd"
+    ];
+    extraModprobeConfig = ''
+      # Bind the GTX 1660 (and its audio function) to vfio for passthrough
+      options vfio-pci ids=10de:2184,10de:1aeb disable_vga=1
+    '';
   };
 
   hardware = {
@@ -145,6 +168,7 @@ in
     };
     libvirtd = {
       enable = true;
+      # virsh/virt-manager guests use these OVMF/TPM defaults for passthrough
       qemu = {
         package = pkgs.qemu_kvm;
         ovmf.enable = true;

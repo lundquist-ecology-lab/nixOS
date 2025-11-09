@@ -2,6 +2,8 @@
 
 let
   inherit (lib) mkIf;
+  syscGreetPkg = pkgs.sysc-greet;
+  syscGreetShare = "${syscGreetPkg}/share/sysc-greet";
 in
 {
   imports = [
@@ -109,9 +111,10 @@ in
     greetd = {
       enable = true;
       settings = {
+        terminal.vt = 1;
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-          user = "mlundquist";
+          command = "${pkgs.hyprland}/bin/Hyprland -c /etc/greetd/hyprland-greeter.conf";
+          user = "greeter";
         };
       };
     };
@@ -217,10 +220,22 @@ in
       ];
       initialPassword = "changeme"; # replace once the system boots
     };
+    users.greeter = {
+      isSystemUser = true;
+      description = "greetd greeter";
+      home = "/var/lib/greeter";
+      group = "greeter";
+      extraGroups = [
+        "video"
+        "input"
+      ];
+      shell = pkgs.bashInteractive;
+    };
     groups = {
       plugdev = { };
       gamemode = { };
       ollama = { };
+      greeter = { };
     };
   };
 
@@ -235,6 +250,51 @@ in
   ];
 
   environment = {
+    etc = {
+      "greetd/hyprland-greeter.conf".text = ''
+        # Minimal Hyprland session for sysc-greet
+        animations {
+            enabled = false
+        }
+
+        decoration {
+            rounding = 0
+            blur {
+                enabled = false
+            }
+        }
+
+        general {
+            gaps_in = 0
+            gaps_out = 0
+            border_size = 0
+        }
+
+        misc {
+            disable_hyprland_logo = true
+            disable_splash_rendering = true
+            background_color = rgb(000000)
+        }
+
+        input {
+            kb_layout = us
+            repeat_delay = 400
+            repeat_rate = 40
+
+            touchpad {
+                tap-to-click = true
+            }
+        }
+
+        windowrulev2 = fullscreen, class:^(kitty)$
+        windowrulev2 = opacity 1.0 override, class:^(kitty)$
+        layerrule = blur, wallpaper
+
+        exec-once = ${pkgs.swww}/bin/swww-daemon
+        exec-once = XDG_CACHE_HOME=/var/cache/sysc-greet HOME=/var/lib/greeter ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
+      '';
+      "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
+    };
     systemPackages =
       let
         stable = with pkgs; [
@@ -299,6 +359,7 @@ in
           inetutils
           iperf3
           kitty
+          swww
           libcamera
           libvirt
           libvncserver
@@ -358,6 +419,7 @@ in
           read-edid
           remmina
           ripgrep
+          sysc-greet
           rsync
           s-nail
           smartmontools
@@ -428,6 +490,12 @@ in
       NIXOS_OZONE_WL = "1";
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/greeter 0755 greeter greeter -"
+    "d /var/cache/sysc-greet 0755 greeter greeter -"
+    "L /usr/share/sysc-greet - - - - ${syscGreetShare}"
+  ];
 
   xdg = {
     portal = {

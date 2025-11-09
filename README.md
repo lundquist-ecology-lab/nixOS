@@ -6,7 +6,7 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 1. Partition/format the target disk as Btrfs and create the subvolumes used here: `@`, `@home`, `@nix`, `@log`.
 2. Mount them (e.g. `/mnt`, `/mnt/home`, …) and mount the EFI partition at `/mnt/boot`.
-3. Because this repo is private, set up SSH auth first (HTTPS + PAT also works but is noisier):
+3. Because both this repo and the custom `sysc-greet` fork are private, set up SSH auth first (one key covers both):
    ```bash
    ssh-keygen -t ed25519 -C "moria"
    cat ~/.ssh/id_ed25519.pub   # add this key to GitHub → Settings → SSH keys
@@ -58,3 +58,12 @@ From then on, keep editing the repo, committing, and running the same rebuild co
 ## Managed dotfiles
 
 `home/mlundquist.nix` links the contents of `home/dotfiles/` into `~/.config` and `~/.local/bin`, so Hyprland, Waybar, Kitty, dunst, mako, tmux, Neovim, Yazi, Spotify Player, Wofi, Wlogout, and helper scripts (e.g. `.local/bin/env`) all come along for the ride. Adjust those files, commit, and rebuild to propagate updates across machines.
+
+## Custom sysc-greet build
+
+- The flake fetches the `master` branch from `git@github.com:lundquist-ecology-lab/sysc-greet.git`. Make sure your SSH key allows cloning/pushing to that repo.
+- Workflow for greeter tweaks:
+  1. Edit the fork (branch `master`) in `~/sysc-greet`.
+  2. `git commit` and `git push origin master`.
+  3. Back in this repo, run `nix build .#sysc-greet` once; copy the new `hash = ...` it prints into `pkgs/sysc-greet/default.nix`.
+  4. `sudo nixos-rebuild switch --flake ~/nixos-moria#moria`.

@@ -7,7 +7,7 @@
   home.sessionVariables = {
     EDITOR = "kitty nvim";
     VISUAL = "kitty nvim";
-    XDG_FILE_MANAGER = "nemo";
+    XDG_FILE_MANAGER = "thunar";
     PULSE_PROP = "media.role=Music";
     MOZ_ENABLE_WAYLAND = "1";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -42,7 +42,7 @@
       history.path = "${config.xdg.dataHome}/zsh/history";
       histSize = 50000;
       initExtraFirst = ''
-        export XDG_FILE_MANAGER=nemo
+        export XDG_FILE_MANAGER=thunar
         export PULSE_PROP='media.role=Music'
         export MOZ_ENABLE_WAYLAND=1
         export __GLX_VENDOR_LIBRARY_NAME=nvidia

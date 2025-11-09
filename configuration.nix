@@ -422,7 +422,7 @@ in
           mpv
           msmtp
           nano
-          (cinnamon.nemo)
+          (xfce.thunar)
           neovim
           ninja
           nwg-look

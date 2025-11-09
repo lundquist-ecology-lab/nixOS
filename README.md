@@ -6,9 +6,11 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 1. Partition/format the target disk as Btrfs and create the subvolumes used here: `@`, `@home`, `@nix`, `@log`.
 2. Mount them (e.g. `/mnt`, `/mnt/home`, …) and mount the EFI partition at `/mnt/boot`.
-3. Clone this repository onto the machine, for example:
+3. Because this repo is private, set up SSH auth first (HTTPS + PAT also works but is noisier):
    ```bash
-   git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria
+   ssh-keygen -t ed25519 -C "moria"
+   cat ~/.ssh/id_ed25519.pub   # add this key to GitHub → Settings → SSH keys
+   git clone git@github.com:lundquist-ecology-lab/nixOS.git ~/nixos-moria
    ```
 4. Build and activate:
    ```bash
@@ -21,7 +23,12 @@ If you prefer to perform the base NixOS installation yourself (e.g. via `nixos-i
 
 1. Boot into the newly installed system, log in as `root`, and ensure networking works.
 2. Install git if it is not present yet: `nix-shell -p git` or `nix profile install nixpkgs#git`.
-3. Clone the repo into your home directory: `git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria`.
+3. Clone the repo (SSH key preferred for private access):
+   ```bash
+   ssh-keygen -t ed25519 -C "moria"
+   cat ~/.ssh/id_ed25519.pub   # add to GitHub before cloning
+   git clone git@github.com:lundquist-ecology-lab/nixOS.git ~/nixos-moria
+   ```
 4. (Optional but recommended) Replace `hardware-configuration.nix` with the one generated on the new system so UUIDs match:
    ```bash
    sudo nixos-generate-config --show-hardware-config > ~/nixos-moria/hardware-configuration.nix

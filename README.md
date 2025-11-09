@@ -4,27 +4,35 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 ## First-time setup
 
-The remote is already configured for `https://github.com/lundquist-ecology-lab/nixOS.git`. To publish the initial version:
-
-```bash
-cd ~/nixos-moria
-git add .
-git commit -m "Initial moria NixOS configuration"
-git push -u origin main
-```
-
-## Deploy on NixOS
-
 1. Partition/format the target disk as Btrfs and create the subvolumes used here: `@`, `@home`, `@nix`, `@log`.
 2. Mount them (e.g. `/mnt`, `/mnt/home`, …) and mount the EFI partition at `/mnt/boot`.
 3. Clone this repository onto the machine, for example:
    ```bash
-   git clone git@github.com:YOUR_USER/YOUR_PRIVATE_REPO.git ~/nixos-moria
+   git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria
    ```
 4. Build and activate:
    ```bash
    sudo nixos-rebuild switch --flake ~/nixos-moria#moria
    ```
+
+## After manual NixOS installation
+
+If you prefer to perform the base NixOS installation yourself (e.g. via `nixos-install`), you only need to:
+
+1. Boot into the newly installed system, log in as `root`, and ensure networking works.
+2. Install git if it is not present yet: `nix-shell -p git` or `nix profile install nixpkgs#git`.
+3. Clone the repo into your home directory: `git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria`.
+4. (Optional but recommended) Replace `hardware-configuration.nix` with the one generated on the new system so UUIDs match:
+   ```bash
+   sudo nixos-generate-config --show-hardware-config > ~/nixos-moria/hardware-configuration.nix
+   ```
+5. Review `configuration.nix` for any machine-specific tweaks (user password, host name, GPU driver choices, etc.).
+6. Apply everything in one go:
+   ```bash
+   sudo nixos-rebuild switch --flake ~/nixos-moria#moria
+   ```
+
+From then on, keep editing the repo, committing, and running the same rebuild command to stay in sync with the Arch setup you mirrored.
 
 ## Daily workflow
 
@@ -39,3 +47,7 @@ git push -u origin main
   ```bash
   sudo nixos-rebuild switch --flake ~/nixos-moria#moria
   ```
+
+## Managed dotfiles
+
+`home/mlundquist.nix` links the contents of `home/dotfiles/` into `~/.config` and `~/.local/bin`, so Hyprland, Waybar, Kitty, dunst, mako, tmux, Neovim, Yazi, Spotify Player, Wofi, Wlogout, and helper scripts (e.g. `.local/bin/env`) all come along for the ride. Adjust those files, commit, and rebuild to propagate updates across machines.

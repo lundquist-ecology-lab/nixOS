@@ -1,0 +1,51 @@
+* {
+	background-image: none;
+	box-shadow: none;
+}
+
+window {
+	background-color: rgba(21, 21, 21, 0.9); /* Adjusted to background color */
+}
+
+button {
+    border-radius: 0;
+    border-color: #424242; /* Dark gray for subtle contrast */
+	text-decoration-color: #E8E3E3; /* Foreground color */
+    color: #E8E3E3; /* Foreground color */
+	background-color: #151515; /* Background color */
+	border-style: solid;
+	border-width: 1px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25%;
+}
+
+button:focus, button:active, button:hover {
+	background-color: #8C977D; /* Soft blue when hovered */
+	outline-style: none;
+}
+
+#lock {
+    background-image: image(url("/home/mlundquist/.config/wlogout/icons/lock.svg"), url("/home/mlundquist/.config/wlogout/icons/lock.svg"));
+}
+
+#logout {
+    background-image: image(url("/home/mlundquist/.config/wlogout/icons/logout.svg"), url("/home/mlundquist/.config/wlogout/icons/logout.svg"));
+}
+
+#suspend {
+    background-image: image(url("/home/mlundquist/.config/wlogout/icons/suspend.svg"), url("/home/mlundquist/.config/wlogout/icons/suspend.svg"));
+}
+
+#hibernate {
+    background-image: image(url("/home/mlundquist/.config/wlogout/icons/hibernate.svg"), url("/home/mlundquist/.config/wlogout/icons/hibernate.svg"));
+}
+
+#shutdown {
+    background-image: image(url("/home/mlundquist/.config/wlogout/icons/shutdown.svg"), url("/home/mlundquist/.config/wlogout/icons/shutdown.svg"));
+}
+
+#reboot {
+    background-image: image(url("/home/mlundquist/.config/wlogout/icons/reboot.svg"), url("/home/mlundquist/.config/wlogout/icons/reboot.svg"));
+}
+

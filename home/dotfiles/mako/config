@@ -1,0 +1,13 @@
+# ~/.config/mako/config
+
+# Global settings
+font=JetBrainsMono Nerd Font 10
+background-color=#151515
+text-color=#E8E3E3
+border-color=#8C977D
+border-size=5
+border-radius=0
+default-timeout=5000
+padding=12
+margin=10
+

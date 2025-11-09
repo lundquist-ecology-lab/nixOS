@@ -5,41 +5,93 @@
   home.homeDirectory = "/home/mlundquist";
 
   home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = "kitty nvim";
+    VISUAL = "kitty nvim";
+    XDG_FILE_MANAGER = "nemo";
+    PULSE_PROP = "media.role=Music";
+    MOZ_ENABLE_WAYLAND = "1";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __GL_VRR_ALLOWED = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    GDK_BACKEND = "wayland";
+    LIBVA_DRIVER_NAME = "nvidia";
+    GBM_BACKEND = "nvidia-drm";
+    ENABLE_HDR_WSI = "1";
+    SDL_HIDAPI_LIBUSB_WHITELIST = "0";
   };
+
+  home.sessionPath = [
+    "$HOME/.local/share/nvim/lazy/zotcite/python3"
+    "$HOME/bin"
+    "$HOME/.local/bin"
+    "$HOME/.pyenv/bin"
+  ];
 
   programs = {
     zsh = {
       enable = true;
       ohMyZsh = {
         enable = true;
-        theme = "agnoster";
+        theme = "minimal";
         plugins = [
           "git"
-          "docker"
-          "python"
-          "fzf"
-          "zoxide"
         ];
       };
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
       history.path = "${config.xdg.dataHome}/zsh/history";
       histSize = 50000;
+      initExtraFirst = ''
+        export XDG_FILE_MANAGER=nemo
+        export PULSE_PROP='media.role=Music'
+        export MOZ_ENABLE_WAYLAND=1
+        export __GLX_VENDOR_LIBRARY_NAME=nvidia
+        export __GL_VRR_ALLOWED=1
+        export WLR_NO_HARDWARE_CURSORS=1
+        export GDK_BACKEND=wayland
+        export LIBVA_DRIVER_NAME=nvidia
+        export GBM_BACKEND=nvidia-drm
+        export ENABLE_HDR_WSI=1
+        export SDL_HIDAPI_LIBUSB_WHITELIST=0
+
+        export PYENV_ROOT="$HOME/.pyenv"
+        if command -v pyenv >/dev/null 2>&1; then
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+        fi
+
+        export NVM_DIR="$HOME/.nvm"
+        if [ -f "${pkgs.nvm}/share/nvm/init-nvm.sh" ]; then
+          source "${pkgs.nvm}/share/nvm/init-nvm.sh"
+        fi
+
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        . "$HOME/.local/bin/env"
+      '';
       initExtra = ''
         bindkey '^[[1;5C' forward-word
         bindkey '^[[1;5D' backward-word
-      '';
-    };
+        alias zshconfig="nvim ~/.zshrc"
+        alias onyx="cd /mnt/onyx"
+        alias storage="cd /mnt/storage"
+        alias update='sudo nixos-rebuild switch --flake ~/nixos-moria'
+        alias ranger="yazi"
+        setopt NO_BEEP
+        alias fzf="fzf-tmux -p 70%"
+        alias dummy="sh /home/mlundquist/bin/dummy.sh"
+        alias monitor="hyprctl monitors"
 
-    tmux = {
-      enable = true;
-      clock24 = true;
-      terminal = "screen-256color";
-      extraConfig = ''
-        set -g mouse on
-        setw -g mode-keys vi
+        export VISUAL="kitty nvim"
+        export EDITOR="kitty nvim"
+
+        tablet() {
+          echo "Starting Wayland VNC server..."
+          if [ -e "/run/user/1000/wayvncctl" ]; then
+            rm "/run/user/1000/wayvncctl"
+          fi
+          wayvnc 0.0.0.0 5900
+        }
       '';
     };
 
@@ -79,20 +131,6 @@
         python311Packages.pynvim
       ];
     };
-    zoxide.enable = true;
-    starship.enable = true;
-    kitty = {
-      enable = true;
-      font = {
-        name = "JetBrainsMono Nerd Font";
-        size = 12;
-      };
-      settings = {
-        confirm_os_window_close = 0;
-        enable_audio_bell = "no";
-        wayland_titlebar_color = "system";
-      };
-    };
   };
 
   services = {
@@ -126,11 +164,58 @@
     };
   };
 
+  xdg.configFile."hypr" = {
+    source = ./dotfiles/hypr;
+    recursive = true;
+  };
+  xdg.configFile."waybar" = {
+    source = ./dotfiles/waybar;
+    recursive = true;
+  };
+  xdg.configFile."mako" = {
+    source = ./dotfiles/mako;
+    recursive = true;
+  };
+  xdg.configFile."dunst" = {
+    source = ./dotfiles/dunst;
+    recursive = true;
+  };
+  xdg.configFile."kitty" = {
+    source = ./dotfiles/kitty;
+    recursive = true;
+  };
+  xdg.configFile."wlogout" = {
+    source = ./dotfiles/wlogout;
+    recursive = true;
+  };
+  xdg.configFile."wofi" = {
+    source = ./dotfiles/wofi;
+    recursive = true;
+  };
+  xdg.configFile."spotify-player" = {
+    source = ./dotfiles/spotify-player;
+    recursive = true;
+  };
+  xdg.configFile."yazi" = {
+    source = ./dotfiles/yazi;
+    recursive = true;
+  };
+  xdg.configFile."nvim" = {
+    source = ./dotfiles/nvim;
+    recursive = true;
+  };
+
   home.shellAliases = {
     ll = "ls -alF";
     la = "ls -A";
     gs = "git status";
     rebuild = "sudo nixos-rebuild switch --flake ~/nixos-moria";
+  };
+
+  home.file.".tmux.conf".source = ./dotfiles/tmux.conf;
+  home.file.".local/bin/env" = {
+    source = ./dotfiles/.local/bin/env;
+    executable = true;
   };
 
   home.packages =
@@ -139,6 +224,7 @@
         fd
         jq
         yq
+        zoxide
         zip
       ];
       unstable = with unstablePkgs; [

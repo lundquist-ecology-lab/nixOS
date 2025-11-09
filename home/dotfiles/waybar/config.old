@@ -1,0 +1,63 @@
+{
+    //"output": "none"
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "modules-left": ["hyprland/workspaces"], 
+    // "modules-center": ["hyprland/window"],
+    "modules-right": ["cpu", "memory", "pulseaudio", "bluetooth", "tray", "clock"],
+ 
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    
+    "tray": {
+        "icon-size": 24,
+        "spacing": 10
+    },
+    
+    "cpu": { 
+      "interval": 10, 
+      "format": "CPU: {usage}%  " 
+    },
+    
+    "memory": { 
+      "interval": 30, 
+      "format": "RAM: {percentage}%" 
+    },
+
+    "clock": {
+        "format": " {:%I:%M }",
+        "format-alt": " {:%d/%m/%Y}",
+        "tooltip": false
+    }, 
+  
+    "network": {
+        "format-wifi": "  {essid} ({signalStrength}%)",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": " Disconnected ",
+        "on-click": "kitty sh ~/.config/waybar/nmtui.sh",
+        "tooltip": false
+    },
+    "bluetooth": {
+	      "format": " On",
+	      "format-disabled": "󰂲 Off",
+	      "format-connected": "󰂱 Connected",
+	      "on-click":"blueberry",
+	      "tooltip": false
+    },
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "  {volume}% | {format_source}",
+        "format-bluetooth": "  {volume}% | {format_source}",
+        "format-bluetooth-muted": "󰝟 | {format_source}",
+        "format-muted": "󰝟 Muted | {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "Muted ",
+        "on-click": "kitty -e ncpamixer"
+    }
+}

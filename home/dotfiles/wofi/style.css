@@ -1,0 +1,53 @@
+* {
+    border-radius: 12px;
+}
+
+window {
+    margin: 0px;
+    border: 5px solid #8C977D;
+    border-radius: 12px;
+    background-color: #151515;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+}
+
+#input {
+    margin: 5px;
+    border: none;
+    color: #E8E3E3;
+    background-color: #424242;
+    border-radius: 8px;
+}
+
+#inner-box {
+    margin: 0px;
+    border: none;
+    background-color: #151515;
+}
+
+#outer-box {
+    margin: 5px;
+    border: none;
+    background-color: #151515;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+#text {
+    margin: 5px;
+    border: none;
+    color: #E8E3E3;
+}
+
+#entry {
+    border-radius: 8px;  /* Added for individual entries */
+    margin: 2px 5px;     /* Added small margin between entries */
+}
+
+#entry:selected {
+    background-color: #424242;
+    border-radius: 8px;  /* Maintaining radius when selected */
+}

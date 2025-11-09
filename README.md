@@ -4,18 +4,67 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 ## First-time setup
 
-1. Partition/format the target disk as Btrfs and create the subvolumes used here: `@`, `@home`, `@nix`, `@log`.
-2. Mount them (e.g. `/mnt`, `/mnt/home`, …) and mount the EFI partition at `/mnt/boot`.
-3. Because both this repo and the custom `sysc-greet` fork are private, set up SSH auth first (one key covers both):
+### Disk layout used on *moria*
+
+- Drive: `nvme0n1` (1.8 TB). Keep the Windows/MSR partitions in place:
+  - `nvme0n1p1` – 100 MB EFI System Partition (FAT32) mounted at `/boot`.
+  - `nvme0n1p2` – 16 MB Microsoft Reserved Partition (leave untouched).
+  - `nvme0n1p3` – 1.8 TB Btrfs partition for NixOS (reformat to Btrfs).
+  - `nvme0n1p4` – 849 MB Windows recovery partition (leave untouched).
+- After formatting `nvme0n1p3`, create the subvolumes expected by this repo:
+  ```bash
+  mkfs.btrfs -L moria-root /dev/nvme0n1p3            # destructive!
+  mount /dev/nvme0n1p3 /mnt
+  btrfs subvolume create /mnt/@
+  btrfs subvolume create /mnt/@home
+  btrfs subvolume create /mnt/@nix
+  btrfs subvolume create /mnt/@log
+  umount /mnt
+  ```
+
+### Live-installer checklist before cloning
+
+1. Boot the installer, set keyboard layout (`loadkeys us`), and confirm networking (`ping nixos.org`).
+2. Mount the Btrfs subvolumes and EFI partition so `/mnt` mirrors the final layout:
    ```bash
-   ssh-keygen -t ed25519 -C "moria"
-   cat ~/.ssh/id_ed25519.pub   # add this key to GitHub → Settings → SSH keys
-   git clone git@github.com:lundquist-ecology-lab/nixOS.git ~/nixos-moria
+   mount -o subvol=@,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt
+   mkdir -p /mnt/{boot,home,nix,var/log}
+   mount -o subvol=@home,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt/home
+   mount -o subvol=@nix,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt/nix
+   mount -o subvol=@log,compress=zstd,noatime,ssd /dev/nvme0n1p3 /mnt/var/log
+   mount /dev/nvme0n1p1 /mnt/boot
    ```
-4. Build and activate:
+3. Mount the USB stick that holds `nixos_moria_ed25519` (e.g. `mount /dev/sdX1 /mnt/usb`) and copy the key into the live user’s `~/.ssh` so private repos can be cloned:
    ```bash
-   sudo nixos-rebuild switch --flake ~/nixos-moria#moria
+   mkdir -p ~/.ssh
+   cp /mnt/usb/nixos_moria_ed25519 ~/.ssh/
+   chmod 600 ~/.ssh/nixos_moria_ed25519
+   printf 'Host github.com-nixos-moria\n  HostName github.com\n  User git\n  IdentityFile ~/.ssh/nixos_moria_ed25519\n  IdentitiesOnly yes\n' >> ~/.ssh/config
+   ssh -T git@github.com-nixos-moria   # accept the host key
    ```
+4. Clone this repo straight into the mounted target (adjust the path if you prefer a different directory):
+   ```bash
+   git clone git@github.com-nixos-moria:nixos-moria.git /mnt/etc/nixos
+   ```
+5. Generate a fresh hardware config so the new UUIDs for `nvme0n1p3`/`nvme0n1p1` match what NixOS will boot with:
+   ```bash
+   nixos-generate-config --root /mnt
+   ```
+   Review (and commit later) the updated `/mnt/etc/nixos/hardware-configuration.nix` before running `nixos-install`.
+6. Install via `nixos-install --flake /mnt/etc/nixos#moria`, set the root password when prompted, then `umount -R /mnt` and reboot.
+
+### Clone & build on an existing system
+
+Because both this repo and the custom `sysc-greet` fork are private, set up SSH auth first (one key covers both):
+```bash
+ssh-keygen -t ed25519 -C "moria"
+cat ~/.ssh/id_ed25519.pub   # add this key to GitHub → Settings → SSH keys
+git clone git@github.com:lundquist-ecology-lab/nixOS.git ~/nixos-moria
+```
+Build and activate:
+```bash
+sudo nixos-rebuild switch --flake ~/nixos-moria#moria
+```
 
 ## After manual NixOS installation
 

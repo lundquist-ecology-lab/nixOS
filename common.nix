@@ -120,6 +120,8 @@
     hyprland = {
       enable = true;
       xwayland.enable = true;
+      package = unstablePkgs.hyprland;
+      portalPackage = unstablePkgs.xdg-desktop-portal-hyprland;
     };
   };
 

@@ -5,6 +5,10 @@ let
     if pkgs ? nvm then pkgs.nvm
     else if unstablePkgs ? nvm then unstablePkgs.nvm
     else null;
+  bibataCursorPkg =
+    if pkgs ? bibata-cursor-theme then pkgs.bibata-cursor-theme
+    else if pkgs ? bibata-cursors then pkgs.bibata-cursors
+    else null;
 in
 
 {
@@ -169,7 +173,7 @@ in
       name = "Papirus-Dark";
     };
     cursorTheme = {
-      package = pkgs.bibata-cursor-theme;
+      package = if bibataCursorPkg != null then bibataCursorPkg else pkgs.adwaita-icon-theme;
       name = "Bibata-Modern-Ice";
       size = 24;
     };

@@ -7,7 +7,7 @@
   modRoot = ".";
   subPackages = [ "cmd/sysc-greet" ];
 
-  vendorHash = "sha256-n/WQaEWYPlVZs1xNOER1tx5I6FwoU0IahZFZZGD4sA=";
+  vendorHash = "sha256-n/WQaEWYPlVZs1xNOER1tx5I6FwoU0IahZFZZGD4saA=";
 
   ldflags = [
     "-s"

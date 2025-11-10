@@ -423,7 +423,7 @@ in
           nwg-look
           nmap
           noto-fonts
-          npm
+          nodejs_22
           ntfs3g
           numlockx
           openbsd-netcat

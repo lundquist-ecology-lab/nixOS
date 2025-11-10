@@ -346,15 +346,19 @@ in
       "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
     };
     systemPackages =
-      let
-        driverctlPkg =
-          if pkgs ? driverctl then pkgs.driverctl
-          else if unstablePkgs ? driverctl then unstablePkgs.driverctl
-          else null;
-        pyenvVirtualenvPkg =
-          if pkgs ? pyenv-virtualenv then pkgs.pyenv-virtualenv
-          else if unstablePkgs ? pyenv-virtualenv then unstablePkgs.pyenv-virtualenv
-          else null;
+  let
+    driverctlPkg =
+      if pkgs ? driverctl then pkgs.driverctl
+      else if unstablePkgs ? driverctl then unstablePkgs.driverctl
+      else null;
+    pyenvVirtualenvPkg =
+      if pkgs ? pyenv-virtualenv then pkgs.pyenv-virtualenv
+      else if unstablePkgs ? pyenv-virtualenv then unstablePkgs.pyenv-virtualenv
+      else null;
+    ufwPkg =
+      if pkgs ? ufw then pkgs.ufw
+      else if unstablePkgs ? ufw then unstablePkgs.ufw
+      else null;
         stable = with pkgs; [
           alsa-utils
           arduino-cli
@@ -481,7 +485,6 @@ in
           (xfce.tumbler)
           udiskie
           udisks2
-          ufw
           unzip
           vde2
           virt-manager
@@ -537,7 +540,8 @@ in
       stable
       ++ unstable
       ++ optional (driverctlPkg != null) driverctlPkg
-      ++ optional (pyenvVirtualenvPkg != null) pyenvVirtualenvPkg;
+      ++ optional (pyenvVirtualenvPkg != null) pyenvVirtualenvPkg
+      ++ optional (ufwPkg != null) ufwPkg;
 
     sessionVariables = {
       EDITOR = "nvim";

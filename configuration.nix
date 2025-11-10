@@ -436,10 +436,6 @@ in
           pavucontrol
           pcmanfm
           pdftk
-          pipewire
-          pipewire-alsa
-          pipewire-pulse
-          wireplumber
           poppler_utils
           (python311.withPackages (ps: with ps; [
             gdal

@@ -465,7 +465,7 @@ in
           ripgrep
           sysc-greet
           rsync
-          s-nail
+          heirloom-mailx
           smartmontools
           spotify-player
           swappy

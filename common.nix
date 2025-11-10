@@ -117,6 +117,15 @@
     };
   };
 
+  # Create Hyprland session file for display managers
+  environment.etc."wayland-sessions/hyprland.desktop".text = ''
+    [Desktop Entry]
+    Name=Hyprland
+    Comment=An intelligent dynamic tiling Wayland compositor
+    Exec=Hyprland
+    Type=Application
+  '';
+
   users = {
     mutableUsers = true;
     users.mlundquist = {

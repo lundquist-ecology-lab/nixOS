@@ -250,7 +250,7 @@ in
   environment.etc = {
     "greetd/hyprland-greeter.conf".text = ''
       # Minimal Hyprland session for sysc-greet
-      env = XDG_DATA_DIRS,/run/current-system/sw/share:/usr/share
+      env = XDG_DATA_DIRS,/run/current-system/sw/share:/usr/share:/etc
       env = XDG_CACHE_HOME,/var/cache/sysc-greet
       env = HOME,/var/lib/greeter
 

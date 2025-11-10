@@ -510,8 +510,6 @@ in
           zsh
         ];
         unstable = with unstablePkgs; [
-          edk2-ovmf
-          gnome-calculator
           gstreamer
           (gnome.gvfs)
           (gst_all_1.gst-libav)

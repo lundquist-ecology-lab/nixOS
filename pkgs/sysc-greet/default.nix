@@ -7,7 +7,7 @@
   modRoot = ".";
   subPackages = [ "cmd/sysc-greet" ];
 
-  vendorHash = null;
+  vendorHash = lib.fakeHash;
 
   ldflags = [
     "-s"

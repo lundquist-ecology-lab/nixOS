@@ -113,14 +113,12 @@ in
       "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
-      "vfio_virqfd"
     ];
     kernelModules = [
       "kvm-amd"
       "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
-      "vfio_virqfd"
     ];
     extraModprobeConfig = ''
       # Bind the GTX 1660 (and its audio function) to vfio for passthrough

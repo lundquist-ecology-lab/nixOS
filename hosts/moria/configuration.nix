@@ -250,6 +250,10 @@ in
   environment.etc = {
     "greetd/hyprland-greeter.conf".text = ''
       # Minimal Hyprland session for sysc-greet
+      env = XDG_DATA_DIRS,/run/current-system/sw/share:/usr/share
+      env = XDG_CACHE_HOME,/var/cache/sysc-greet
+      env = HOME,/var/lib/greeter
+
       animations {
           enabled = false
       }
@@ -288,7 +292,7 @@ in
       layerrule = blur, wallpaper
 
       exec-once = ${pkgs.swww}/bin/swww-daemon
-      exec-once = XDG_CACHE_HOME=/var/cache/sysc-greet XDG_DATA_DIRS=/run/current-system/sw/share:/usr/share HOME=/var/lib/greeter ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
+      exec-once = ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
     '';
     "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
   };

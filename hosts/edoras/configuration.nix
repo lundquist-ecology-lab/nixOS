@@ -1,5 +1,10 @@
 { inputs, lib, pkgs, unstablePkgs, config, ... }:
 
+let
+  inherit (lib) mkIf optional;
+  syscGreetPkg = pkgs.sysc-greet;
+  syscGreetShare = "${syscGreetPkg}/share/sysc-greet";
+in
 {
   imports = [
     ../../common.nix
@@ -24,12 +29,27 @@
       lidSwitch = "suspend";
       lidSwitchExternalPower = "lock";
     };
+    greetd = {
+      enable = true;
+      settings = {
+        terminal.vt = 1;
+        default_session = {
+          command = "${pkgs.niri}/bin/niri --config /etc/greetd/niri-greeter.kdl";
+          user = "greeter";
+        };
+      };
+    };
   };
 
   # Laptop-specific boot config
   boot.kernelParams = [
     # Add laptop-specific kernel params if needed
   ];
+
+  # Laptop-specific programs
+  programs = {
+    niri.enable = true;
+  };
 
   # Laptop-specific hardware
   hardware = {
@@ -38,11 +58,57 @@
     # Add specific GPU config here if needed
   };
 
+  # Greeter user
+  users.users.greeter = {
+    isSystemUser = true;
+    description = "greetd greeter";
+    home = "/var/lib/greeter";
+    group = "greeter";
+    extraGroups = [
+      "video"
+      "input"
+    ];
+    shell = pkgs.bashInteractive;
+  };
+
+  users.groups.greeter = { };
+
+  # Environment variables for session detection
+  environment.sessionVariables = {
+    XDG_DATA_DIRS = [
+      "/run/current-system/sw/share"
+      "/usr/share"
+    ];
+  };
+
   # Laptop-specific packages
   environment.systemPackages = with pkgs; [
     acpi
     powertop
     brightnessctl
+    sysc-greet
+    niri
+  ];
+
+  # Greeter configuration files
+  environment.etc = {
+    "greetd/niri-greeter.kdl".text = ''
+      spawn-at-startup "${pkgs.swww}/bin/swww-daemon"
+      spawn-at-startup "${pkgs.kitty}/bin/kitty" "--start-as=fullscreen" "--config=/etc/greetd/kitty.conf" "${syscGreetPkg}/bin/sysc-greet"
+
+      environment {
+          XDG_CACHE_HOME "/var/cache/sysc-greet"
+          XDG_DATA_DIRS "/run/current-system/sw/share:/usr/share"
+          HOME "/var/lib/greeter"
+      }
+    '';
+    "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/greeter 0755 greeter greeter -"
+    "d /var/cache/sysc-greet 0755 greeter greeter -"
+    "L /usr/share/sysc-greet - - - - ${syscGreetShare}"
   ];
 
   # Note: Your laptop-specific waybar config should go in home-manager

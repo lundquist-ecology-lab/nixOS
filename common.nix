@@ -2,6 +2,7 @@
 
 {
   nix = {
+    package = pkgs.nixVersions.latest;  # Use latest Nix to fix kernel module issues
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;

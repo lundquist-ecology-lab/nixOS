@@ -8,13 +8,14 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     sysc-greet-src = {
       url = "github:lundquist-ecology-lab/sysc-greet/master";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sysc-greet-src, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, sysc-greet-src, ... }@inputs:
     let
       system = "x86_64-linux";
       unstablePkgs = import nixpkgs-unstable {
@@ -64,6 +65,7 @@
           modules = [
             { nixpkgs.overlays = overlays; }
             ./hosts/moria/configuration.nix
+            hyprland.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

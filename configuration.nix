@@ -1,7 +1,7 @@
 { inputs, lib, pkgs, unstablePkgs, config, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf optional;
   syscGreetPkg = pkgs.sysc-greet;
   syscGreetShare = "${syscGreetPkg}/share/sysc-greet";
 in
@@ -347,6 +347,10 @@ in
     };
     systemPackages =
       let
+        driverctlPkg =
+          if pkgs ? driverctl then pkgs.driverctl
+          else if unstablePkgs ? driverctl then unstablePkgs.driverctl
+          else null;
         stable = with pkgs; [
           alsa-utils
           arduino-cli
@@ -362,7 +366,6 @@ in
           cifs-utils
           clang
           cmatrix
-          driverctl
           ddcutil
           deno
           dhcpcd
@@ -370,7 +373,6 @@ in
           docker-compose
           dosfstools
           dunst
-          edk2-ovmf
           efibootmgr
           egl-wayland
           ethtool
@@ -391,14 +393,7 @@ in
           gh
           glfw
           glow
-          gnome-calculator
           go
-          (gst_all_1.gst-libav)
-          (gst_all_1.gst-plugins-bad)
-          (gst_all_1.gst-plugins-good)
-          (gst_all_1.gst-plugins-ugly)
-          (gst_all_1.gst-plugins-vaapi)
-          gstreamer
           (gnome.gvfs)
           htop
           hunspell
@@ -515,6 +510,15 @@ in
           zsh
         ];
         unstable = with unstablePkgs; [
+          edk2-ovmf
+          gnome-calculator
+          gstreamer
+          (gnome.gvfs)
+          (gst_all_1.gst-libav)
+          (gst_all_1.gst-plugins-bad)
+          (gst_all_1.gst-plugins-good)
+          (gst_all_1.gst-plugins-ugly)
+          (gst_all_1.gst-plugins-vaapi)
           heroic
           jellyfin-media-player
           sunshine
@@ -532,7 +536,7 @@ in
           hyprpaper
         ];
       in
-      stable ++ unstable;
+      stable ++ unstable ++ optional (driverctlPkg != null) driverctlPkg;
 
     sessionVariables = {
       EDITOR = "nvim";

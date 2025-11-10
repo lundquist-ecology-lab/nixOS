@@ -39,17 +39,10 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
    mount -o subvol=@log,compress=zstd,noatime,ssd /dev/nvme0n1p2 /mnt/var/log
    mount /dev/nvme0n1p1 /mnt/boot
    ```
-3. Mount the USB stick that holds `nixos_moria_ed25519` (e.g. `mount /dev/sdX1 /mnt/usb`) and copy the key into the live user’s `~/.ssh` so private repos can be cloned:
-   ```bash
-   mkdir -p ~/.ssh
-   cp /mnt/usb/nixos_moria_ed25519 ~/.ssh/
-   chmod 600 ~/.ssh/nixos_moria_ed25519
-   printf 'Host github.com-nixos-moria\n  HostName github.com\n  User git\n  IdentityFile ~/.ssh/nixos_moria_ed25519\n  IdentitiesOnly yes\n' >> ~/.ssh/config
-   ssh -T git@github.com-nixos-moria   # accept the host key
-   ```
+3. (Optional) Set up SSH credentials if you prefer `git@github.com` URLs. Otherwise skip this and use HTTPS.
 4. Clone this repo straight into the mounted target (adjust the path if you prefer a different directory):
    ```bash
-   git clone git@github.com-nixos-moria:nixos-moria.git /mnt/etc/nixos
+   git clone https://github.com/lundquist-ecology-lab/nixOS.git /mnt/etc/nixos
    ```
 5. Generate a fresh hardware config so the new UUIDs for `nvme0n1p2`/`nvme0n1p1` match what NixOS will boot with:
    ```bash
@@ -60,11 +53,9 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 ### Clone & build on an existing system
 
-Because both this repo and the custom `sysc-greet` fork are private, set up SSH auth first (one key covers both):
+Clone the repo (HTTPS works out of the box now that everything is public):
 ```bash
-ssh-keygen -t ed25519 -C "moria"
-cat ~/.ssh/id_ed25519.pub   # add this key to GitHub → Settings → SSH keys
-git clone git@github.com:lundquist-ecology-lab/nixOS.git ~/nixos-moria
+git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria
 ```
 Build and activate:
 ```bash
@@ -77,11 +68,9 @@ If you prefer to perform the base NixOS installation yourself (e.g. via `nixos-i
 
 1. Boot into the newly installed system, log in as `root`, and ensure networking works.
 2. Install git if it is not present yet: `nix-shell -p git` or `nix profile install nixpkgs#git`.
-3. Clone the repo (SSH key preferred for private access):
+3. Clone the repo (HTTPS is fine):
    ```bash
-   ssh-keygen -t ed25519 -C "moria"
-   cat ~/.ssh/id_ed25519.pub   # add to GitHub before cloning
-   git clone git@github.com:lundquist-ecology-lab/nixOS.git ~/nixos-moria
+   git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria
    ```
 4. (Optional but recommended) Replace `hardware-configuration.nix` with the one generated on the new system so UUIDs match:
    ```bash
@@ -115,7 +104,7 @@ From then on, keep editing the repo, committing, and running the same rebuild co
 
 ## Custom sysc-greet build
 
-- The flake fetches the `master` branch from `git@github.com:lundquist-ecology-lab/sysc-greet.git`. Make sure your SSH key allows cloning/pushing to that repo.
+- The flake fetches the public `master` branch from `https://github.com/lundquist-ecology-lab/sysc-greet`.
 - Workflow for greeter tweaks:
   1. Edit the fork (branch `master`) in `~/sysc-greet`.
   2. `git commit` and `git push origin master`.

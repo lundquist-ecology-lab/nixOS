@@ -95,7 +95,7 @@ in
 
   # NVIDIA configuration
   hardware = {
-    opengl.extraPackages = with pkgs; [
+    graphics.extraPackages = with pkgs; [
       vaapiVdpau
       libvdpau
       libva
@@ -108,7 +108,6 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.production;
       open = false;
     };
-    nvidia-container-toolkit.enable = true;
   };
 
   # NVIDIA Wayland/Hyprland environment optimizations

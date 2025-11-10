@@ -49,10 +49,9 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
     };
     bluetooth.enable = true;
   };
@@ -328,7 +327,7 @@
     mime.enable = true;
   };
 
-  sound.enable = true;
+  # sound.enable removed in NixOS 25.05 - pipewire handles audio
   hardware.pulseaudio.enable = false;
 
   system.stateVersion = "24.05";

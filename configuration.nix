@@ -351,6 +351,10 @@ in
           if pkgs ? driverctl then pkgs.driverctl
           else if unstablePkgs ? driverctl then unstablePkgs.driverctl
           else null;
+        pyenvVirtualenvPkg =
+          if pkgs ? pyenv-virtualenv then pkgs.pyenv-virtualenv
+          else if unstablePkgs ? pyenv-virtualenv then unstablePkgs.pyenv-virtualenv
+          else null;
         stable = with pkgs; [
           alsa-utils
           arduino-cli
@@ -452,7 +456,6 @@ in
             python-docx
           ]))
           pyenv
-          pyenvVirtualenv
           qemu_full
           qgis
           qt5.qtwayland
@@ -532,7 +535,10 @@ in
           hyprpaper
         ];
       in
-      stable ++ unstable ++ optional (driverctlPkg != null) driverctlPkg;
+      stable
+      ++ unstable
+      ++ optional (driverctlPkg != null) driverctlPkg
+      ++ optional (pyenvVirtualenvPkg != null) pyenvVirtualenvPkg;
 
     sessionVariables = {
       EDITOR = "nvim";

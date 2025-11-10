@@ -28,7 +28,7 @@ in
       allowUnfree = true;
       allowBroken = false;
       permittedInsecurePackages = [
-        "qtwebengine-5.15.17"
+        "qtwebengine-5.15.19"
       ];
     };
   };

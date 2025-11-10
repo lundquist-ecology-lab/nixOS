@@ -236,7 +236,7 @@ in
     lxappearance
     mangohud
     moonlight-qt
-    nvidia-vaapi-driver
+    # nvidia-vaapi-driver  # Temporarily disabled - built against old kernel
     openrgb
     os-prober
     qemu_full

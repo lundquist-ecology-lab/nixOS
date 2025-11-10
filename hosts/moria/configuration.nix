@@ -290,7 +290,7 @@ in
       windowrulev2 = fullscreen, class:^(kitty)$
       windowrulev2 = opacity 1.0 override, class:^(kitty)$
 
-      exec-once = ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
+      exec-once = sleep 0.5 && ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
     '';
     "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
   };

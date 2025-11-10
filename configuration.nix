@@ -146,6 +146,7 @@ in
       open = false;
     };
     bluetooth.enable = true;
+    nvidia-container-toolkit.enable = true;
   };
 
   security = {
@@ -213,7 +214,6 @@ in
   virtualisation = {
     docker = {
       enable = true;
-      enableNvidia = true;
       autoPrune = {
         enable = true;
         dates = "weekly";

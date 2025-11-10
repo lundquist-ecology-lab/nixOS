@@ -1,8 +1,4 @@
-{ lib, buildGoModule }:
-
-{ src
-, version ? "unstable-local"
-}:
+{ lib, buildGoModule, src, version ? "unstable-local" }:
 
 buildGoModule rec {
   pname = "sysc-greet";

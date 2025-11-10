@@ -170,8 +170,6 @@
           cacert
           cifs-utils
           clang
-          claude-code
-          codex
           curl
           deno
           dosfstools
@@ -213,6 +211,7 @@
           nmap
           noto-fonts
           nodejs_22
+          nodePackages.npm
           ntfs3g
           numlockx
           netcat-openbsd

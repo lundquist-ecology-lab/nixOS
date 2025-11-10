@@ -33,8 +33,6 @@
             version = "local";
             go_1_25 = unstablePkgs.go_1_25 or unstablePkgs.go;
           };
-          claude-code = prev.callPackage ./pkgs/claude-code { };
-          codex = prev.callPackage ./pkgs/codex { };
         })
       ];
     in
@@ -54,8 +52,6 @@
         in
         {
           sysc-greet = pkgsForPackages.sysc-greet;
-          claude-code = pkgsForPackages.claude-code;
-          codex = pkgsForPackages.codex;
           default = pkgsForPackages.sysc-greet;
         };
 

@@ -1,30 +1,21 @@
-{ lib, stdenv, nodejs, makeWrapper }:
+{ lib, buildNpmPackage, fetchurl }:
 
-stdenv.mkDerivation {
+buildNpmPackage rec {
   pname = "codex";
-  version = "latest";
+  version = "0.57.0";
 
-  dontUnpack = true;
+  src = fetchurl {
+    url = "https://registry.npmjs.org/@openai/codex/-/codex-${version}.tgz";
+    hash = "sha256-/mAh5xwC0DwKrKknPo1/UMiOWj8lzxAVn5U2UY4aBg4=";
+  };
 
-  nativeBuildInputs = [ makeWrapper nodejs ];
+  npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 
-  installPhase = ''
-    mkdir -p $out/bin
-    mkdir -p $out/lib/node_modules
-
-    # Install the npm package globally into our derivation
-    export HOME=$TMPDIR
-    ${nodejs}/bin/npm install -g --prefix $out @openai/codex
-
-    # Create a wrapper that uses the correct node_modules path
-    makeWrapper ${nodejs}/bin/node $out/bin/codex \
-      --add-flags "$out/lib/node_modules/@openai/codex/bin/codex.js" \
-      --prefix PATH : ${lib.makeBinPath [ nodejs ]}
-  '';
+  dontNpmBuild = true;
 
   meta = with lib; {
     description = "OpenAI Codex CLI - AI-powered coding assistant";
-    homepage = "https://github.com/openai/codex";
+    homepage = "https://www.npmjs.com/package/@openai/codex";
     license = licenses.mit;
     platforms = platforms.all;
     mainProgram = "codex";

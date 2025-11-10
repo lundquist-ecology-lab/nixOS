@@ -1,30 +1,21 @@
-{ lib, stdenv, nodejs, makeWrapper }:
+{ lib, buildNpmPackage, fetchurl }:
 
-stdenv.mkDerivation {
+buildNpmPackage rec {
   pname = "claude-code";
-  version = "latest";
+  version = "2.0.36";
 
-  dontUnpack = true;
+  src = fetchurl {
+    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+    hash = "sha256-QglaqsyOOdt9XAFi+0TYc6HMOUMGgSabrEksAE/9DhM=";
+  };
 
-  nativeBuildInputs = [ makeWrapper nodejs ];
+  npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 
-  installPhase = ''
-    mkdir -p $out/bin
-    mkdir -p $out/lib/node_modules
-
-    # Install the npm package globally into our derivation
-    export HOME=$TMPDIR
-    ${nodejs}/bin/npm install -g --prefix $out @anthropic-ai/claude-code
-
-    # Create a wrapper that uses the correct node_modules path
-    makeWrapper ${nodejs}/bin/node $out/bin/claude-code \
-      --add-flags "$out/lib/node_modules/@anthropic-ai/claude-code/bin/claude-code.js" \
-      --prefix PATH : ${lib.makeBinPath [ nodejs ]}
-  '';
+  dontNpmBuild = true;
 
   meta = with lib; {
     description = "Claude Code CLI - AI-powered coding assistant";
-    homepage = "https://github.com/anthropics/claude-code";
+    homepage = "https://www.npmjs.com/package/@anthropic-ai/claude-code";
     license = licenses.mit;
     platforms = platforms.all;
     mainProgram = "claude-code";

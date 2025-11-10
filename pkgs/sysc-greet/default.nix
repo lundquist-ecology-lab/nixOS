@@ -7,7 +7,7 @@ buildGoModule rec {
   modRoot = ".";
   subPackages = [ "cmd/sysc-greet" ];
 
-  vendorHash = lib.fakeSha256;
+  vendorHash = null;
 
   ldflags = [
     "-s"

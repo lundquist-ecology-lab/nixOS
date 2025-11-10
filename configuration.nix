@@ -27,6 +27,9 @@ in
     config = {
       allowUnfree = true;
       allowBroken = false;
+      permittedInsecurePackages = [
+        "qtwebengine-5.15.17"
+      ];
     };
   };
 
@@ -522,7 +525,7 @@ in
           protontricks
           proton-ge-bin
           ncpamixer
-          onlyoffice-bin
+          onlyoffice-desktopeditors
           ripdrag
           wlogout
           zoom-us

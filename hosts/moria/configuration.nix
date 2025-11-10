@@ -210,39 +210,39 @@ in
     greeter = { };
   };
 
-  # Desktop-specific packages
+  # Desktop-specific packages - temporarily reduced to find culprit
   environment.systemPackages = with pkgs; [
-    arduino-cli
-    blender
-    blueberry
-    bridge-utils
-    cava
-    cmatrix
-    ddcutil
-    dhcpcd
-    dnsmasq
-    docker-compose
-    egl-wayland
-    ethtool
-    galculator
-    gamemode
-    gamescope
-    gimp
-    glfw
-    libcamera
-    libvirt
-    libvncserver
-    lutris
-    lxappearance
-    mangohud
-    moonlight-qt
-    # nvidia-vaapi-driver  # Temporarily disabled - built against old kernel
-    openrgb
-    os-prober
-    qemu_full
-    qgis
-    read-edid
-    remmina
+    # arduino-cli
+    # blender
+    # blueberry
+    # bridge-utils
+    # cava
+    # cmatrix
+    # ddcutil
+    # dhcpcd
+    # dnsmasq
+    # docker-compose
+    # egl-wayland
+    # ethtool
+    # galculator
+    # gamemode
+    # gamescope
+    # gimp
+    # glfw
+    # libcamera
+    # libvirt
+    # libvncserver
+    # lutris
+    # lxappearance
+    # mangohud
+    # moonlight-qt
+    # nvidia-vaapi-driver
+    # openrgb
+    # os-prober
+    # qemu_full
+    # qgis
+    # read-edid
+    # remmina
     sysc-greet
     smartmontools
     swtpm
@@ -256,13 +256,13 @@ in
     wayvnc
     (wineWowPackages.staging)
     winetricks
-  ] ++ (with unstablePkgs; [
-    heroic
-    jellyfin-media-player
-    sunshine
-    protonup-qt
-    protontricks
-  ]);
+  ]; # ++ (with unstablePkgs; [
+  #   heroic
+  #   jellyfin-media-player
+  #   sunshine
+  #   protonup-qt
+  #   protontricks
+  # ]);
 
   # Greeter configuration files
   environment.etc = {

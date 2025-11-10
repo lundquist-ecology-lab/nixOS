@@ -16,8 +16,6 @@ in
   home.homeDirectory = "/home/mlundquist";
 
   home.sessionVariables = {
-    EDITOR = "kitty nvim";
-    VISUAL = "kitty nvim";
     XDG_FILE_MANAGER = "thunar";
     PULSE_PROP = "media.role=Music";
     MOZ_ENABLE_WAYLAND = "1";

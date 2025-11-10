@@ -66,6 +66,13 @@
     polkit.enable = true;
   };
 
+  # Optimize systemd journal for faster boot
+  services.journald.extraConfig = ''
+    SystemMaxUse=500M
+    RuntimeMaxUse=100M
+    MaxRetentionSec=1week
+  '';
+
   services = {
     pipewire = {
       enable = true;
@@ -113,6 +120,8 @@
     hyprland = {
       enable = true;
       xwayland.enable = true;
+      package = unstablePkgs.hyprland;
+      portalPackage = unstablePkgs.xdg-desktop-portal-hyprland;
     };
   };
 

@@ -1,4 +1,4 @@
-{ lib, stdenv, nodejs }:
+{ lib, stdenv, nodejs, cacert }:
 
 stdenv.mkDerivation rec {
   pname = "claude-code";
@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   dontUnpack = true;
   dontBuild = true;
 
-  nativeBuildInputs = [ nodejs ];
+  nativeBuildInputs = [ nodejs cacert ];
 
   outputHashMode = "recursive";
   outputHashAlgo = "sha256";
@@ -20,6 +20,8 @@ stdenv.mkDerivation rec {
     export HOME=$TMPDIR
     export npm_config_cache=$TMPDIR/npm_cache
     export npm_config_userconfig=$TMPDIR/.npmrc
+    export SSL_CERT_FILE=${cacert}/etc/ssl/certs/ca-bundle.crt
+    export NIX_SSL_CERT_FILE=${cacert}/etc/ssl/certs/ca-bundle.crt
 
     ${nodejs}/bin/npm install -g --prefix $out --no-audit --no-fund @anthropic-ai/claude-code@${version}
 

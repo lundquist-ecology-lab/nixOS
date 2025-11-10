@@ -167,10 +167,12 @@
           brightnessctl
           btop
           btrfs-progs
+          cacert
           cifs-utils
           clang
           claude-code
           codex
+          curl
           deno
           dosfstools
           dunst
@@ -263,6 +265,7 @@
           xorg.xrandr
           xournalpp
           yazi
+          yarn
           yt-dlp
           zathura
           zoxide
@@ -294,6 +297,9 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
       NIXOS_OZONE_WL = "1";
+      SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+      NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+      GIT_SSL_CAINFO = "/etc/ssl/certs/ca-bundle.crt";
     };
   };
 

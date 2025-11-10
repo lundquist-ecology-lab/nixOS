@@ -178,6 +178,13 @@ in
     shell = pkgs.bashInteractive;
   };
 
+  environment.sessionVariables = {
+    XDG_DATA_DIRS = [
+      "/run/current-system/sw/share"
+      "/usr/share"
+    ];
+  };
+
   users.groups = {
     plugdev = { };
     gamemode = { };
@@ -281,7 +288,7 @@ in
       layerrule = blur, wallpaper
 
       exec-once = ${pkgs.swww}/bin/swww-daemon
-      exec-once = XDG_CACHE_HOME=/var/cache/sysc-greet HOME=/var/lib/greeter ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
+      exec-once = XDG_CACHE_HOME=/var/cache/sysc-greet XDG_DATA_DIRS=/run/current-system/sw/share:/usr/share HOME=/var/lib/greeter ${pkgs.kitty}/bin/kitty --start-as=fullscreen --config=/etc/greetd/kitty.conf ${syscGreetPkg}/bin/sysc-greet && ${pkgs.hyprland}/bin/hyprctl dispatch exit
     '';
     "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
   };

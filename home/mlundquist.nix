@@ -69,7 +69,9 @@ in
         if command -v pyenv >/dev/null 2>&1; then
           eval "$(pyenv init --path)"
           eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
+          if pyenv commands | grep -q virtualenv-init; then
+            eval "$(pyenv virtualenv-init -)"
+          fi
         fi
 
         export NVM_DIR="$HOME/.nvm"

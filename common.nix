@@ -169,6 +169,8 @@
           btrfs-progs
           cifs-utils
           clang
+          claude-code
+          codex
           deno
           dosfstools
           dunst
@@ -213,8 +215,6 @@
           numlockx
           netcat-openbsd
           openssh
-          nodePackages.npm
-          shell-gpt
           pandoc
           papirus-icon-theme
           pavucontrol

@@ -478,7 +478,7 @@ in
           tmux
           trash-cli
           tree-sitter
-          tumbler
+          (xfce.tumbler)
           udiskie
           udisks2
           ufw

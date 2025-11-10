@@ -272,10 +272,10 @@ in
       env = XDG_CACHE_HOME,/var/cache/sysc-greet
       env = HOME,/var/lib/greeter
 
-      # Monitor configuration - simple settings to avoid DP freeze
-      monitor = DP-6,3840x2160@160,0x0,1.25
-      monitor = HDMI-A-2,1920x1080,-1080x-252,1
-      monitor = ,preferred,auto,1
+      # Monitor configuration - disable DP monitor to avoid freeze in greeter
+      # Only use HDMI monitor for greeter session
+      monitor = DP-6,disable
+      monitor = HDMI-A-2,preferred,auto,1
 
       animations {
           enabled = false

@@ -426,7 +426,7 @@ in
           nodejs_22
           ntfs3g
           numlockx
-          openbsd-netcat
+          netcat-openbsd
           openrgb
           nvidia-vaapi-driver
           openssh

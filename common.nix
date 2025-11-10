@@ -132,6 +132,7 @@
     Comment=An intelligent dynamic tiling Wayland compositor
     Exec=Hyprland
     Type=Application
+    DesktopNames=Hyprland
   '';
 
   users = {

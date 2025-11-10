@@ -259,8 +259,6 @@
           wl-clipboard
           wlr-randr
           wofi
-          xdg-desktop-portal-gtk
-          xdg-desktop-portal-hyprland
           xorg.xrandr
           xournalpp
           yazi

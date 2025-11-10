@@ -220,7 +220,7 @@
           mpv
           msmtp
           nano
-          thunar
+          xfce.thunar
           neovim
           ninja
           nwg-look

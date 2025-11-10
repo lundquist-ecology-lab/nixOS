@@ -113,7 +113,6 @@
     hyprland = {
       enable = true;
       xwayland.enable = true;
-      package = unstablePkgs.hyprland;
     };
   };
 

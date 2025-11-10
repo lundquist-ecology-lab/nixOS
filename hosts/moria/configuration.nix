@@ -237,7 +237,6 @@ in
     sunshine
     protonup-qt
     protontricks
-    proton-ge-bin
   ]);
 
   # Greeter configuration files

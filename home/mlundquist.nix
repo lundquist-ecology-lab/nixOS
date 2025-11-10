@@ -242,6 +242,7 @@ in
         zip
       ];
       unstable = with unstablePkgs; [
+        claude-code
       ];
     in
     stable ++ unstable;

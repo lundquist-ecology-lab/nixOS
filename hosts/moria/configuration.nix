@@ -87,6 +87,8 @@ in
       "vfio"
       "vfio_iommu_type1"
     ];
+    # Ensure kernel modules are built for current kernel
+    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
     extraModprobeConfig = ''
       # Bind the GTX 1660 (and its audio function) to vfio for passthrough
       options vfio-pci ids=10de:2184,10de:1aeb disable_vga=1

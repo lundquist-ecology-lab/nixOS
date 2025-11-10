@@ -72,6 +72,9 @@ in
       "iommu=pt"
       "pcie_acs_override=downstream,multifunction"
       "vfio-pci.ids=10de:2184,10de:1aeb"
+      # NVIDIA Wayland/Hyprland fixes
+      "nvidia_drm.modeset=1"
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     ];
     initrd.kernelModules = [
       "vfio_pci"
@@ -106,6 +109,20 @@ in
       open = false;
     };
     nvidia-container-toolkit.enable = true;
+  };
+
+  # NVIDIA Wayland/Hyprland environment optimizations
+  environment.sessionVariables = {
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "nvidia";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    WLR_RENDERER = "vulkan";
+    __GL_GSYNC_ALLOWED = "0";
+    __GL_VRR_ALLOWED = "0";
+    __GL_SYNC_TO_VBLANK = "0";
+    XDG_SESSION_TYPE = "wayland";
+    MOZ_ENABLE_WAYLAND = "1";
   };
 
   # Greeter configuration

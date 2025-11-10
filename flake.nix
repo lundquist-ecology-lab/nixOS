@@ -17,14 +17,6 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sysc-greet-src, ... }@inputs:
     let
       system = "x86_64-linux";
-      overlays = [
-        (final: prev: {
-          sysc-greet = prev.callPackage ./pkgs/sysc-greet {
-            src = sysc-greet-src;
-            version = "local";
-          };
-        })
-      ];
       unstablePkgs = import nixpkgs-unstable {
         inherit system;
         config = {
@@ -34,6 +26,15 @@
           ];
         };
       };
+      overlays = [
+        (final: prev: {
+          sysc-greet = prev.callPackage ./pkgs/sysc-greet {
+            src = sysc-greet-src;
+            version = "local";
+            go_1_25 = unstablePkgs.go_1_25 or unstablePkgs.go;
+          };
+        })
+      ];
     in
     {
       packages.${system} =

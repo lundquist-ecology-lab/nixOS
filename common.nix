@@ -196,7 +196,7 @@
           fastfetch
           ffmpegthumbnailer
           figlet
-          (gnome.file-roller)
+          file-roller
           firefox
           flatpak
           fzf
@@ -204,7 +204,7 @@
           gh
           glow
           go
-          (gnome.gvfs)
+          gvfs
           htop
           hunspell
           hunspellDicts.en_US
@@ -220,7 +220,7 @@
           mpv
           msmtp
           nano
-          (xfce.thunar)
+          thunar
           neovim
           ninja
           nwg-look
@@ -264,7 +264,7 @@
           tmux
           trash-cli
           tree-sitter
-          (xfce.tumbler)
+          tumbler
           udiskie
           udisks2
           unzip

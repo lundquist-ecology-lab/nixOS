@@ -510,7 +510,6 @@ in
           zsh
         ];
         unstable = with unstablePkgs; [
-          gstreamer
           (gnome.gvfs)
           (gst_all_1.gst-libav)
           (gst_all_1.gst-plugins-bad)

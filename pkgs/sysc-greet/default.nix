@@ -1,6 +1,6 @@
-{ lib, buildGoModule, src, version ? "unstable-local" }:
+{ lib, buildGoModule, go_1_25, src, version ? "unstable-local" }:
 
-buildGoModule rec {
+(buildGoModule.override { go = go_1_25; }) rec {
   pname = "sysc-greet";
   inherit version src;
 

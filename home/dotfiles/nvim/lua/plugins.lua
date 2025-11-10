@@ -133,7 +133,6 @@ require("lazy").setup({
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'jalvesaq/cmp-zotcite',
     },
     config = function()
       local cmp = require('cmp')
@@ -145,13 +144,9 @@ require("lazy").setup({
         }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
-          { name = 'cmp_zotcite' },
           { name = 'buffer' },
           { name = 'path' },
         }),
-      })
-      require('cmp_zotcite').setup({
-        filetypes = { 'markdown', 'pandoc', 'rmd', 'quarto', 'tex' },
       })
     end,
   },
@@ -207,21 +202,6 @@ require("lazy").setup({
   },
   {
     'jpmcb/nvim-llama',
-  },
-
-  -- Zotcite core
-  {
-    'jalvesaq/zotcite',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-telescope/telescope.nvim',
-    },
-    config = function()
-      require('zotcite').setup({
-        filetypes         = { 'markdown', 'pandoc', 'rmd', 'quarto', 'tex' },
-        citation_template = '{Author}{Year}',
-      })
-    end,
   },
 
   {

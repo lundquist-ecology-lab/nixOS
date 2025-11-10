@@ -109,6 +109,7 @@ in
     "d /var/lib/greeter 0755 greeter greeter -"
     "d /var/cache/sysc-greet 0755 greeter greeter -"
     "L /usr/share/sysc-greet - - - - ${syscGreetShare}"
+    "L /usr/share/wayland-sessions - - - - /etc/wayland-sessions"
   ];
 
   # Note: Your laptop-specific waybar config should go in home-manager

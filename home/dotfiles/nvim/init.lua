@@ -140,8 +140,7 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 vim.api.nvim_create_autocmd({"FileType"}, {
   pattern = {"vimwiki", "markdown"},
   callback = function()
-    -- Disable zotcite for wiki files
-    vim.b.zotcite_enabled = false
+    -- Additional vimwiki/markdown configuration can go here
   end
 })
 

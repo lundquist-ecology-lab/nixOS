@@ -126,6 +126,7 @@
   };
 
   # Create Hyprland session file for display managers
+  # Put it in /run/current-system for sysc-greet to find
   environment.etc."wayland-sessions/hyprland.desktop".text = ''
     [Desktop Entry]
     Name=Hyprland

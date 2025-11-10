@@ -30,7 +30,6 @@ in
   };
 
   home.sessionPath = [
-    "$HOME/.local/share/nvim/lazy/zotcite/python3"
     "$HOME/bin"
     "$HOME/.local/bin"
     "$HOME/.pyenv/bin"

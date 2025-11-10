@@ -79,7 +79,6 @@ cmp.setup({
         luasnip = "[Snip]",
         cmdline = "[Cmd]",
         nvim_lua = "[Lua]",
-        zotcite = "[Zot]",
       })[entry.source.name]
       return vim_item
     end,
@@ -89,7 +88,6 @@ cmp.setup({
     { name = 'path' },
     { name = 'buffer' },
     { name = 'nvim_lsp' },
-    { name = 'zotcite'}
   }),
 })
 

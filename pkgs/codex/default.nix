@@ -1,17 +1,37 @@
-{ lib, buildNpmPackage, fetchurl }:
+{ lib, stdenv, nodejs }:
 
-buildNpmPackage rec {
+stdenv.mkDerivation rec {
   pname = "codex";
   version = "0.57.0";
 
-  src = fetchurl {
-    url = "https://registry.npmjs.org/@openai/codex/-/codex-${version}.tgz";
-    hash = "sha256-/mAh5xwC0DwKrKknPo1/UMiOWj8lzxAVn5U2UY4aBg4=";
-  };
+  dontUnpack = true;
+  dontBuild = true;
 
-  npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  nativeBuildInputs = [ nodejs ];
 
-  dontNpmBuild = true;
+  outputHashMode = "recursive";
+  outputHashAlgo = "sha256";
+  outputHash = lib.fakeSha256;
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin
+    export HOME=$TMPDIR
+    export npm_config_cache=$TMPDIR/npm_cache
+    export npm_config_userconfig=$TMPDIR/.npmrc
+
+    ${nodejs}/bin/npm install -g --prefix $out --no-audit --no-fund @openai/codex@${version}
+
+    # Fix shebangs in bin files
+    for file in $out/bin/*; do
+      if [ -f "$file" ]; then
+        sed -i "1s|^#!.*node|#!${nodejs}/bin/node|" "$file" || true
+      fi
+    done
+
+    runHook postInstall
+  '';
 
   meta = with lib; {
     description = "OpenAI Codex CLI - AI-powered coding assistant";

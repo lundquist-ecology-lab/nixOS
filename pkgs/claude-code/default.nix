@@ -1,17 +1,37 @@
-{ lib, buildNpmPackage, fetchurl }:
+{ lib, stdenv, nodejs }:
 
-buildNpmPackage rec {
+stdenv.mkDerivation rec {
   pname = "claude-code";
   version = "2.0.36";
 
-  src = fetchurl {
-    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-    hash = "sha256-QglarMjjnYt9XAFi+0TYc6HMOUMGgSabrEksAEz9DhM=";
-  };
+  dontUnpack = true;
+  dontBuild = true;
 
-  npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  nativeBuildInputs = [ nodejs ];
 
-  dontNpmBuild = true;
+  outputHashMode = "recursive";
+  outputHashAlgo = "sha256";
+  outputHash = lib.fakeSha256;
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin
+    export HOME=$TMPDIR
+    export npm_config_cache=$TMPDIR/npm_cache
+    export npm_config_userconfig=$TMPDIR/.npmrc
+
+    ${nodejs}/bin/npm install -g --prefix $out --no-audit --no-fund @anthropic-ai/claude-code@${version}
+
+    # Fix shebangs in bin files
+    for file in $out/bin/*; do
+      if [ -f "$file" ]; then
+        sed -i "1s|^#!.*node|#!${nodejs}/bin/node|" "$file" || true
+      fi
+    done
+
+    runHook postInstall
+  '';
 
   meta = with lib; {
     description = "Claude Code CLI - AI-powered coding assistant";

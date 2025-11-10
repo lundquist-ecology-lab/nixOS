@@ -238,20 +238,22 @@
           pcmanfm
           pdftk
           poppler_utils
-          (python311.withPackages (ps: with ps; [
-            gdal
-            python-magic
-            owslib
-            pillow
-            pip
-            poetry-core
-            psycopg2
-            pynvim
-            pypdf
-            seaborn
-            statsmodels
-            python-docx
-          ]))
+          # Temporarily disabled to debug kernel module issue
+          # (python311.withPackages (ps: with ps; [
+          #   gdal
+          #   python-magic
+          #   owslib
+          #   pillow
+          #   pip
+          #   poetry-core
+          #   psycopg2
+          #   pynvim
+          #   pypdf
+          #   seaborn
+          #   statsmodels
+          #   python-docx
+          # ]))
+          python311
           pyenv
           qt5.qtwayland
           ranger

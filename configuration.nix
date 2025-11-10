@@ -506,7 +506,6 @@ in
           yazi
           yt-dlp
           zathura
-          zathuraPlugins.mupdf
           zoxide
           zsh
         ];

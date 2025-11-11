@@ -74,7 +74,9 @@ in
       "vfio-pci.ids=10de:2184,10de:1aeb"
       # NVIDIA Wayland/Hyprland fixes
       "nvidia_drm.modeset=1"
+      "nvidia_drm.fbdev=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      "nouveau.modeset=0"
     ];
     initrd.kernelModules = [
       "vfio_pci"
@@ -106,13 +108,19 @@ in
     nvidia = {
       modesetting.enable = true;
       powerManagement.enable = true;
+      # Fine-grained power management (Turing+ GPUs only)
+      # May help with multi-monitor issues but is experimental
+      # powerManagement.finegrained = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.production;
+      # Consider testing with open = true for potentially better multi-monitor support
       open = false;
     };
   };
 
   # NVIDIA Wayland/Hyprland environment optimizations
+  # Note: GBM_BACKEND enables screen sharing but may cause Firefox/Thunderbird crashes
+  # If you experience crashes, try commenting out GBM_BACKEND
   environment.sessionVariables = {
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -124,6 +132,9 @@ in
     __GL_SYNC_TO_VBLANK = "0";
     XDG_SESSION_TYPE = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
+    QT_QPA_PLATFORM = "wayland";
+    # XDG_DATA_DIRS merged here to avoid duplicate blocks
+    XDG_DATA_DIRS = "/run/current-system/sw/share:/usr/share";
   };
 
   # Greeter configuration
@@ -194,13 +205,6 @@ in
       "input"
     ];
     shell = pkgs.bashInteractive;
-  };
-
-  environment.sessionVariables = {
-    XDG_DATA_DIRS = [
-      "/run/current-system/sw/share"
-      "/usr/share"
-    ];
   };
 
   users.groups = {

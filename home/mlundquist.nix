@@ -251,13 +251,22 @@ in
         zoxide
         zip
       ];
-      aiTools = with pkgs; [
-        # Installed from the nix-ai-tools overlay so they're available on any host using this flake.
-        claude-code
-        code
-        codex
-        gemini-cli
-      ];
+      aiTools =
+        let
+          codeNoCodex = pkgs.symlinkJoin {
+            name = "code-no-codex";
+            paths = [ pkgs.code ];
+            postBuild = ''
+              rm -f $out/bin/codex
+            '';
+          };
+        in with pkgs; [
+          # Installed from the nix-ai-tools overlay so they're available on any host using this flake.
+          claude-code
+          codeNoCodex
+          codex
+          gemini-cli
+        ];
     in
     essentials ++ aiTools;
 

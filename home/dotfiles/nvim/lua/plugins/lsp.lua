@@ -3,8 +3,6 @@ if not ok then
   return
 end
 
-local lspconfig = require("lspconfig")
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
@@ -22,7 +20,7 @@ local servers = {
   "lua_ls",
   "pyright",
   "denols",
-  "tsserver",
+  "ts_ls",
   "html",
   "cssls",
   "jsonls",
@@ -44,13 +42,13 @@ require('mason-lspconfig').setup {
 }
 
 for _, server in ipairs(servers) do
-  lspconfig[server].setup {
+  vim.lsp.config(server, {
     capabilities = capabilities,
-  }
+  })
 end
 
 -- Manually configure R since it's not installed via Mason
-lspconfig.r_language_server.setup({
+vim.lsp.config('r_language_server', {
   cmd = { "R", "--slave", "-e", "languageserver::run()" },
   capabilities = capabilities,
 })

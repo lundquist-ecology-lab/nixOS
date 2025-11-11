@@ -89,6 +89,9 @@ in
       "i2c-dev"   # Required so OpenRGB can talk to DRAM/board controllers
       "i2c-piix4" # AMD SMBus controller driver needed for RGB access
     ];
+    blacklistedKernelModules = [
+      "nouveau"
+    ];
     # Ensure kernel modules are built for current kernel
     extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
     extraModprobeConfig = ''
@@ -144,6 +147,7 @@ in
       };
     };
     udev.packages = [ pkgs.openrgb ];
+    xserver.videoDrivers = [ "nvidia" ];
   };
 
   # Virtualization (desktop-specific)

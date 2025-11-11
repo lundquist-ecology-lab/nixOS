@@ -22,12 +22,14 @@ g.mapleader = " "
 require("lazy").setup({
   {
     'norcalli/nvim-colorizer.lua',
+    event = "BufReadPost",
     config = function()
       require('colorizer').setup()
     end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPost",
     main = "ibl",
     opts = {},
     config = function()
@@ -36,6 +38,7 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    event = "BufReadPost",
     run = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -72,12 +75,17 @@ require("lazy").setup({
   'RRethy/nvim-base16',
   {
     'kyazdani42/nvim-tree.lua',
+    cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFile" },
+    keys = {
+      { "<C-n>", "<cmd>NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
+    },
     config = function()
       require('plugins.nvim-tree')
     end,
   },
   {
     'lewis6991/gitsigns.nvim',
+    event = "BufReadPost",
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('plugins.gitsigns')
@@ -85,6 +93,13 @@ require("lazy").setup({
   },
   {
     'nvim-telescope/telescope.nvim',
+    cmd = "Telescope",
+    keys = {
+      { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live Grep" },
+      { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+      { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help Tags" },
+    },
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('plugins.telescope')
@@ -96,14 +111,14 @@ require("lazy").setup({
           prompt_title = "Find Notes",
         })
       end, { desc = "Find Notes" })
-      
+
       vim.keymap.set("n", "<leader>fg", function()
         telescope.live_grep({
           cwd = "/mnt/onyx/notes",
           prompt_title = "Search Notes Content",
         })
       end, { desc = "Search Notes Content" })
-      
+
       vim.keymap.set("n", "<leader>ft", function()
         telescope.grep_string({
           cwd = "/mnt/onyx/notes",
@@ -115,6 +130,7 @@ require("lazy").setup({
   },
   {
     'akinsho/bufferline.nvim',
+    event = "VeryLazy",
     config = function()
       require('plugins.bufferline')
     end,
@@ -123,12 +139,14 @@ require("lazy").setup({
   -- Completion & LSP
   {
     'windwp/nvim-autopairs',
+    event = "InsertEnter",
     config = function()
       require('nvim-autopairs').setup()
     end,
   },
   {
     'hrsh7th/nvim-cmp',
+    event = "InsertEnter",
     dependencies = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
@@ -152,12 +170,17 @@ require("lazy").setup({
   },
   {
     'numToStr/Comment.nvim',
+    keys = {
+      { "gc", mode = { "n", "v" }, desc = "Comment toggle" },
+      { "gb", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
+    },
     config = function()
       require('Comment').setup()
     end,
   },
   {
     'williamboman/mason.nvim',
+    event = "BufReadPre",
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'neovim/nvim-lspconfig',
@@ -177,6 +200,7 @@ require("lazy").setup({
   -- Claude Code
   {
     "greggh/claude-code.nvim",
+    cmd = { "ClaudeCode" },
     dependencies = {
       "nvim-lua/plenary.nvim", -- Required for git operations
     },
@@ -187,7 +211,7 @@ require("lazy").setup({
   -- Snippets
   {
     'L3MON4D3/LuaSnip',
-    after = 'nvim-cmp',
+    event = "InsertEnter",
     dependencies = {
       'saadparwaiz1/cmp_luasnip',
       'rafamadriz/friendly-snippets',
@@ -198,24 +222,27 @@ require("lazy").setup({
   },
   {
     'nvim-lualine/lualine.nvim',
+    event = "VeryLazy",
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   {
     'jpmcb/nvim-llama',
+    cmd = { "Llama" },
   },
 
   {
     'ojroques/nvim-osc52',
+    event = "VeryLazy",
     config = function()
       require('osc52').setup({ max_length = 0, trim = false, silent = false })
       vim.keymap.set('n', '<leader>y', function() require('osc52').copy_register('"') end)
-      vim.keymap.set('v', '<leader>y', function() require('osc52').copy_register('"') end)      
+      vim.keymap.set('v', '<leader>y', function() require('osc52').copy_register('"') end)
     end,
   },
 
   {
     "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
+    ft = { "markdown", "vimwiki" },
     build = "cd app && yarn install",
     config = function()
       vim.g.mkdp_auto_start = 0
@@ -225,6 +252,13 @@ require("lazy").setup({
   -- Enhanced VimWiki setup for better notebook experience
  {
   "vimwiki/vimwiki",
+  ft = { "vimwiki", "markdown" },
+  cmd = { "VimwikiIndex", "VimwikiDiaryIndex", "VimwikiMakeDiaryNote" },
+  keys = {
+    { "<leader>ww", "<cmd>VimwikiIndex<cr>", desc = "Open Wiki Index" },
+    { "<leader>wd", "<cmd>VimwikiDiaryIndex<cr>", desc = "Open Diary Index" },
+    { "<leader>wn", "<cmd>VimwikiMakeDiaryNote<cr>", desc = "New Diary Entry" },
+  },
   init = function()
     vim.g.vimwiki_list = {
       {
@@ -272,6 +306,14 @@ require("lazy").setup({
 -- Enhanced note-taking with telekasten
   {
     "renerocksai/telekasten.nvim",
+    ft = { "markdown", "vimwiki" },
+    cmd = { "Telekasten" },
+    keys = {
+      { "<leader>tf", "<cmd>Telekasten find_notes<CR>", desc = "Telekasten Find Notes" },
+      { "<leader>tg", "<cmd>Telekasten search_notes<CR>", desc = "Telekasten Search Notes" },
+      { "<leader>tt", "<cmd>Telekasten goto_today<CR>", desc = "Telekasten Today's Note" },
+      { "<leader>tn", "<cmd>Telekasten new_note<CR>", desc = "Telekasten New Note" },
+    },
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
       require('telekasten').setup({
@@ -306,6 +348,10 @@ require("lazy").setup({
   -- Focused writing environment
   {
     "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    keys = {
+      { "<leader>z", "<cmd>ZenMode<CR>", desc = "Toggle Zen Mode" },
+    },
     config = function()
       require("zen-mode").setup({
         window = {
@@ -348,6 +394,8 @@ require("lazy").setup({
   -- Use glow for markdown and wiki preview
   {
     "ellisonleao/glow.nvim",
+    ft = { "markdown", "vimwiki" },
+    cmd = "Glow",
     config = function()
       require('glow').setup({
         -- Support both markdown and wiki files
@@ -359,17 +407,20 @@ require("lazy").setup({
       })
     end,
   },
-  
+
   -- Add telescope-frecency for better note navigation (optional, but useful)
   {
     "nvim-telescope/telescope-frecency.nvim",
-    dependencies = { 
+    keys = {
+      { "<leader>fr", desc = "Recent Notes" },
+    },
+    dependencies = {
       "nvim-telescope/telescope.nvim",
       "kkharji/sqlite.lua",
     },
     config = function()
       require("telescope").load_extension("frecency")
-      
+
       -- For frequent note access
       vim.keymap.set("n", "<leader>fr", function()
         require("telescope").extensions.frecency.frecency({
@@ -378,5 +429,20 @@ require("lazy").setup({
         })
       end, { desc = "Recent Notes" })
     end,
+  },
+}, {
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
   },
 })

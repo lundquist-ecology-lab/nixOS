@@ -6,6 +6,7 @@
 
   modRoot = ".";
   subPackages = [ "cmd/sysc-greet" ];
+  patches = [ ./nix-session-paths.patch ];
 
   vendorHash = "sha256-n/WQaEWYPlVZs1xNOER1tx5I6FwoU0IahZFZZGD4saA=";
 

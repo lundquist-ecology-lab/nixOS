@@ -27,6 +27,7 @@ in
     GBM_BACKEND = "nvidia-drm";
     ENABLE_HDR_WSI = "1";
     SDL_HIDAPI_LIBUSB_WHITELIST = "0";
+    NIXOS_OZONE_WL = "1";
   };
 
   home.sessionPath = [
@@ -63,6 +64,7 @@ in
         export GBM_BACKEND=nvidia-drm
         export ENABLE_HDR_WSI=1
         export SDL_HIDAPI_LIBUSB_WHITELIST=0
+        export NIXOS_OZONE_WL=1
 
         export PYENV_ROOT="$HOME/.pyenv"
         if command -v pyenv >/dev/null 2>&1; then

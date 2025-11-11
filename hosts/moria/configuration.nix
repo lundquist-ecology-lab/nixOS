@@ -254,6 +254,7 @@ in
     wayvnc
     (wineWowPackages.staging)
     winetricks
+    config.hardware.nvidia.package.bin
   ] ++ (with unstablePkgs; [
     heroic
     jellyfin-media-player

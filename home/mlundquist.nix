@@ -242,24 +242,22 @@ in
 
   home.packages =
     let
-      stable = with pkgs; [
+      essentials = with pkgs; [
         fd
         jq
         yq
         zoxide
         zip
       ];
-      unstable = with unstablePkgs; [
-        # AI tools from nix-ai-tools flake
-        claude-code  # Anthropic's Claude CLI tool
-        gemini-cli   # Google Gemini CLI
-        code         # Fork of Codex for multi-provider agent orchestration
-        codex        # OpenAI's local coding agent
-        # Other available: opencode, qwen-code, goose-cli, cursor-agent, etc.
-        # See: https://github.com/numtide/nix-ai-tools
+      aiTools = with pkgs; [
+        # Installed from the nix-ai-tools overlay so they're available on any host using this flake.
+        claude-code
+        code
+        codex
+        gemini-cli
       ];
     in
-    stable ++ unstable;
+    essentials ++ aiTools;
 
   home.stateVersion = "24.05";
 }

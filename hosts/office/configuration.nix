@@ -250,10 +250,9 @@ in
       env = XDG_CACHE_HOME,/var/cache/sysc-greet
       env = HOME,/var/lib/greeter
 
-      # Monitor configuration - adjust for your office hardware
-      # Example: monitor = HDMI-A-1,preferred,auto,1
-      # You may need to adjust this after first boot
-      monitor = ,preferred,auto,1
+      # Monitor configuration - DP on left, HDMI on right
+      monitor = DP-1,1920x1080@75,0x0,1
+      monitor = HDMI-A-1,1920x1080@75,1920x0,1
 
       animations {
           enabled = false

@@ -37,6 +37,8 @@
             version = "local";
             go_1_25 = unstablePkgs.go_1_25 or unstablePkgs.go;
           };
+          tela-icon-theme = prev.callPackage ./pkgs/tela-icon-theme { };
+          paradise-gtk-theme = prev.callPackage ./pkgs/paradise-gtk-theme { };
         })
         # Add nix-ai-tools packages
         (final: prev:

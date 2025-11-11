@@ -154,6 +154,14 @@ in
     ssh-agent.enable = true;
   };
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      gtk-theme = "paradise";
+      icon-theme = "Tela-black-dark";
+    };
+  };
+
   xdg = {
     enable = true;
     userDirs = {
@@ -166,17 +174,23 @@ in
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.adw-gtk3;
-      name = "adw-gtk3";
+      package = pkgs.paradise-gtk-theme;
+      name = "paradise";
     };
     iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus-Dark";
+      package = pkgs.tela-icon-theme;
+      name = "Tela-black-dark";
     };
     cursorTheme = {
       package = pkgs.rose-pine-hyprcursor;
       name = "rose-pine-hyprcursor";
       size = 24;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
     };
   };
 
@@ -278,6 +292,8 @@ in
         ];
       themePackages = with pkgs; [
         rose-pine-hyprcursor
+        tela-icon-theme
+        paradise-gtk-theme
       ];
     in
     essentials ++ aiTools ++ themePackages;

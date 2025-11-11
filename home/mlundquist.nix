@@ -180,6 +180,15 @@ in
     };
   };
 
+  # Set up cursor theme for Wayland/Hyprland
+  home.pointerCursor = {
+    package = pkgs.rose-pine-hyprcursor;
+    name = "rose-pine-hyprcursor";
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   xdg.configFile."hypr" = {
     source = ./dotfiles/hypr;
     recursive = true;
@@ -267,8 +276,11 @@ in
           codex
           gemini-cli
         ];
+      themePackages = with pkgs; [
+        rose-pine-hyprcursor
+      ];
     in
-    essentials ++ aiTools;
+    essentials ++ aiTools ++ themePackages;
 
   home.stateVersion = "24.05";
 }

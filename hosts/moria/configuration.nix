@@ -133,8 +133,6 @@ in
     XDG_SESSION_TYPE = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
     QT_QPA_PLATFORM = "wayland";
-    # XDG_DATA_DIRS merged here to avoid duplicate blocks
-    XDG_DATA_DIRS = "/run/current-system/sw/share:/usr/share";
   };
 
   # Greeter configuration

@@ -198,7 +198,9 @@ vim.api.nvim_create_autocmd({"FileType"}, {
 
 -- Check if we're likely using an exit node (high latency)
 local function is_high_latency()
-  return true
+  -- Only enable high latency mode when actually on network shares
+  local bufname = vim.api.nvim_buf_get_name(0)
+  return bufname:match("^/mnt/") ~= nil
 end
 
 if is_high_latency() then

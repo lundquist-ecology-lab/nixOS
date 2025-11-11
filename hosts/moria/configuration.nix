@@ -271,7 +271,7 @@ in
   environment.etc = {
     "greetd/hyprland-greeter.conf".text = ''
       # Minimal Hyprland session for sysc-greet
-      env = XDG_DATA_DIRS,/run/current-system/sw/share:/usr/share:/etc
+      env = XDG_DATA_DIRS,/etc:/usr/share:/run/current-system/sw/share
       env = XDG_CACHE_HOME,/var/cache/sysc-greet
       env = HOME,/var/lib/greeter
 
@@ -326,5 +326,7 @@ in
     "d /var/cache/sysc-greet 0755 greeter greeter -"
     "L /usr/share/sysc-greet - - - - ${syscGreetShare}"
     "L /usr/share/wayland-sessions - - - - /etc/wayland-sessions"
+    "d /run/current-system/sw/share/wayland-sessions 0755 root root -"
+    "L /run/current-system/sw/share/wayland-sessions/hyprland.desktop - - - - /etc/wayland-sessions/hyprland.desktop"
   ];
 }

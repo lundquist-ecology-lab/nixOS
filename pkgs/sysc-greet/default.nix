@@ -6,7 +6,21 @@
 
   modRoot = ".";
   subPackages = [ "cmd/sysc-greet" ];
-  patches = [ ./nix-session-paths.patch ];
+
+  postPatch = ''
+    substituteInPlace internal/sessions/sessions.go \
+      --replace-fail 'paths := []string{
+		"/usr/share/xsessions",
+		"/usr/share/wayland-sessions",
+	}' 'paths := []string{
+		"/usr/share/xsessions",
+		"/usr/share/wayland-sessions",
+		"/run/current-system/sw/share/xsessions",
+		"/run/current-system/sw/share/wayland-sessions",
+		"/etc/xsessions",
+		"/etc/wayland-sessions",
+	}'
+  '';
 
   vendorHash = "sha256-n/WQaEWYPlVZs1xNOER1tx5I6FwoU0IahZFZZGD4saA=";
 

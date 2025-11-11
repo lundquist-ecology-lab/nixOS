@@ -2,16 +2,18 @@ diff --git a/internal/sessions/sessions.go b/internal/sessions/sessions.go
 index 2f1c8e5..8a2baf9 100644
 --- a/internal/sessions/sessions.go
 +++ b/internal/sessions/sessions.go
-@@
--	paths := []string{
--		"/usr/share/xsessions",
--		"/usr/share/wayland-sessions",
--	}
-+	paths := []string{
-+		"/usr/share/xsessions",
-+		"/usr/share/wayland-sessions",
+@@ -12,10 +12,16 @@ func LoadSessions() ([]Session, error) {
+ 	var sessions []Session
+ 
+ 	// Default paths
+ 	paths := []string{
+ 		"/usr/share/xsessions",
+ 		"/usr/share/wayland-sessions",
 +		"/run/current-system/sw/share/xsessions",
 +		"/run/current-system/sw/share/wayland-sessions",
 +		"/etc/xsessions",
 +		"/etc/wayland-sessions",
-+	}
+ 	}
+ 
+ 	for _, basePath := range paths {
+

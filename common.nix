@@ -325,7 +325,8 @@
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
       ];
-      wlr.enable = true;
+      # wlr portal disabled - using xdg-desktop-portal-hyprland from programs.hyprland instead
+      # wlr.enable = true;
     };
     mime.enable = true;
   };

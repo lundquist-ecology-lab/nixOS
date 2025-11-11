@@ -74,9 +74,7 @@ in
       "vfio-pci.ids=10de:2184,10de:1aeb"
       # NVIDIA Wayland/Hyprland fixes
       "nvidia_drm.modeset=1"
-      "nvidia_drm.fbdev=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      "nouveau.modeset=0"
     ];
     initrd.kernelModules = [
       "vfio_pci"
@@ -108,12 +106,8 @@ in
     nvidia = {
       modesetting.enable = true;
       powerManagement.enable = true;
-      # Fine-grained power management (Turing+ GPUs only)
-      # May help with multi-monitor issues but is experimental
-      # powerManagement.finegrained = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.production;
-      # Consider testing with open = true for potentially better multi-monitor support
       open = false;
     };
   };

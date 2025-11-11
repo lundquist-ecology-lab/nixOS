@@ -84,6 +84,26 @@
           ];
         };
 
+        office = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit unstablePkgs inputs;
+          };
+          modules = [
+            { nixpkgs.overlays = overlays; }
+            ./hosts/office/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {
+                inherit unstablePkgs inputs;
+              };
+              home-manager.users.mlundquist = import ./home/mlundquist.nix;
+            }
+          ];
+        };
+
         edoras = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {

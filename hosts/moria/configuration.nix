@@ -86,6 +86,8 @@ in
       "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
+      "i2c-dev"   # Required so OpenRGB can talk to DRAM/board controllers
+      "i2c-piix4" # AMD SMBus controller driver needed for RGB access
     ];
     # Ensure kernel modules are built for current kernel
     extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];

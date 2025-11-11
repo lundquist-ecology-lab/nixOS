@@ -45,6 +45,10 @@ in
   boot.kernelParams = [
     # Add laptop-specific kernel params if needed
   ];
+  boot.kernelModules = [
+    "i2c-dev"   # Needed so OpenRGB (and similar tools) can access RGB controllers
+    "i2c-i801"  # Intel SMBus driver most laptop boards require for RGB over I2C
+  ];
 
   # Laptop-specific programs
   programs = {

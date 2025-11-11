@@ -12,9 +12,13 @@
       url = "github:lundquist-ecology-lab/sysc-greet/master";
       flake = false;
     };
+    nix-ai-tools = {
+      url = "github:numtide/nix-ai-tools";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sysc-greet-src, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sysc-greet-src, nix-ai-tools, ... }@inputs:
     let
       system = "x86_64-linux";
       unstablePkgs = import nixpkgs-unstable {
@@ -34,6 +38,10 @@
             go_1_25 = unstablePkgs.go_1_25 or unstablePkgs.go;
           };
         })
+        # Add nix-ai-tools packages
+        (final: prev:
+          nix-ai-tools.packages.${system}
+        )
       ];
     in
     {

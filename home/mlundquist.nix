@@ -172,14 +172,22 @@ in
       name = "Papirus-Dark";
     };
     cursorTheme = {
-      package = if bibataCursorPkg != null then bibataCursorPkg else pkgs.adwaita-icon-theme;
-      name = "Bibata-Modern-Ice";
+      package = pkgs.rose-pine-hyprcursor;
+      name = "rose-pine-hyprcursor";
       size = 24;
     };
   };
 
   xdg.configFile."hypr" = {
     source = ./dotfiles/hypr;
+    recursive = true;
+  };
+
+  # Declarative wallpaper management
+  # Put your wallpapers in home/wallpapers/ directory in this repo
+  # Then they'll automatically be linked to ~/wallpapers/ on rebuild
+  home.file."wallpapers" = {
+    source = ./wallpapers;
     recursive = true;
   };
   xdg.configFile."waybar" = {
@@ -242,7 +250,13 @@ in
         zip
       ];
       unstable = with unstablePkgs; [
-        claude-code
+        # AI tools from nix-ai-tools flake
+        claude-code  # Anthropic's Claude CLI tool
+        gemini-cli   # Google Gemini CLI
+        code         # Fork of Codex for multi-provider agent orchestration
+        codex        # OpenAI's local coding agent
+        # Other available: opencode, qwen-code, goose-cli, cursor-agent, etc.
+        # See: https://github.com/numtide/nix-ai-tools
       ];
     in
     stable ++ unstable;

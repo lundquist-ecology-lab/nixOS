@@ -144,7 +144,7 @@ in
       {
         name = "HP_LaserJet_Pro_M225dn";
         deviceUri = "usb://HP/LaserJet%20Pro%20MFP%20M225dn?serial=CNB9J7W356&interface=1";
-        model = "everywhere";
+        model = "drv:///hp/hpcups.drv/hp-laserjet_pro_mfp_m225_m226-ps.ppd";
         description = "HP LaserJet Pro MFP M225dn (USB)";
         location = "Office";
         ppdOptions = {

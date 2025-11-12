@@ -349,7 +349,7 @@
   };
 
   # sound.enable removed in NixOS 25.05 - pipewire handles audio
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   system.stateVersion = "24.05";
 

@@ -52,7 +52,7 @@ in
         path = "${config.xdg.dataHome}/zsh/history";
         size = 50000;
       };
-      initExtraFirst = ''
+      initContent = lib.mkBefore ''
         export XDG_FILE_MANAGER=thunar
         export PULSE_PROP='media.role=Music'
         export MOZ_ENABLE_WAYLAND=1
@@ -84,8 +84,7 @@ in
 
         export PATH="$PYENV_ROOT/bin:$PATH"
         . "$HOME/.local/bin/env"
-      '';
-      initExtra = ''
+
         bindkey '^[[1;5C' forward-word
         bindkey '^[[1;5D' backward-word
         alias zshconfig="nvim ~/.zshrc"

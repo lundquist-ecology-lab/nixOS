@@ -69,7 +69,7 @@ appimageTools.wrapType2 {
     libsForQt5.qtsvg
     libsForQt5.qtmultimedia
     libsForQt5.qtx11extras
-    webkitgtk
+    webkitgtk_4_1
     ffmpeg
     zlib
     wayland

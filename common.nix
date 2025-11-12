@@ -299,11 +299,9 @@
           wlr-randr
           rofi-wayland
           xorg.xrandr
-          xournalpp
           yazi
           yarn
           yt-dlp
-          zathura
           zoxide
           zsh
         ];

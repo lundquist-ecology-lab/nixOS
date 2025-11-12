@@ -1,0 +1,55 @@
+/* Paradise theme for rofi power menu */
+
+* {
+    background-color: #151515;
+    foreground-color: #E8E3E3;
+    border-color: #8C977D;
+    selected-color: #424242;
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+window {
+    background-color: @background-color;
+    border: 5px;
+    border-color: @border-color;
+    border-radius: 12px;
+    padding: 10px;
+    width: 300px;
+}
+
+mainbox {
+    background-color: @background-color;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @selected-color;
+    text-color: @foreground-color;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 0px 0px 10px 0px;
+    children: [prompt];
+}
+
+prompt {
+    background-color: @selected-color;
+    text-color: @foreground-color;
+}
+
+listview {
+    background-color: @background-color;
+    lines: 5;
+    spacing: 5px;
+}
+
+element {
+    background-color: @background-color;
+    text-color: @foreground-color;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+element selected {
+    background-color: @selected-color;
+    text-color: @foreground-color;
+}

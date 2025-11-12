@@ -1,4 +1,4 @@
-{ config, pkgs, unstablePkgs ? pkgs, lib, ... }:
+{ config, pkgs, unstablePkgs ? pkgs, lib, osConfig, ... }:
 
 let
   nvmPkg =
@@ -208,6 +208,16 @@ in
     recursive = true;
   };
 
+  # Create host-specific monitor config symlink
+  xdg.configFile."hypr/monitors.conf".source =
+    let hostname = osConfig.networking.hostName;
+    in ./dotfiles/hypr/monitors-${hostname}.conf;
+
+  # Create host-specific keybindings symlink
+  xdg.configFile."hypr/keybinds.conf".source =
+    let hostname = osConfig.networking.hostName;
+    in ./dotfiles/hypr/keybinds-${hostname}.conf;
+
   # Declarative wallpaper management
   # Put your wallpapers in home/wallpapers/ directory in this repo
   # Then they'll automatically be linked to ~/wallpapers/ on rebuild
@@ -239,6 +249,10 @@ in
     source = ./dotfiles/wofi;
     recursive = true;
   };
+  xdg.configFile."rofi" = {
+    source = ./dotfiles/rofi;
+    recursive = true;
+  };
   xdg.configFile."spotify-player" = {
     source = ./dotfiles/spotify-player;
     recursive = true;
@@ -266,6 +280,10 @@ in
   };
   home.file.".local/bin/wpctl-cycle-sink.sh" = {
     source = ./dotfiles/.local/bin/wpctl-cycle-sink.sh;
+    executable = true;
+  };
+  home.file.".local/bin/powermenu.sh" = {
+    source = ./dotfiles/.local/bin/powermenu.sh;
     executable = true;
   };
 

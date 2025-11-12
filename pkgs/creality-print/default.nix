@@ -73,6 +73,7 @@ appimageTools.wrapType2 {
     ffmpeg
     zlib
     wayland
+    libdeflate
   ];
 
   extraInstallCommands = ''

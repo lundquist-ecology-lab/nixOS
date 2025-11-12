@@ -1,4 +1,4 @@
-/* Paradise theme for rofi power menu */
+/* Paradise theme for rofi app launcher */
 
 * {
     background-color: #151515;
@@ -14,7 +14,7 @@ window {
     border-color: @border-color;
     border-radius: 12px;
     padding: 10px;
-    width: 300px;
+    width: 500px;
 }
 
 mainbox {
@@ -29,7 +29,15 @@ inputbar {
     border-radius: 8px;
     padding: 8px;
     margin: 0px 0px 10px 0px;
-    children: [prompt];
+    children: [prompt, entry];
+    spacing: 8px;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @foreground-color;
+    placeholder: "Search apps...";
+    placeholder-color: #666666;
 }
 
 prompt {
@@ -40,7 +48,7 @@ prompt {
 listview {
     background-color: transparent;
     text-color: @foreground-color;
-    lines: 5;
+    lines: 8;
     spacing: 5px;
 }
 

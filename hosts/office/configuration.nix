@@ -138,6 +138,23 @@ in
     xserver.videoDrivers = [ "amdgpu" ];
   };
 
+  # USB Printer configuration
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "HP_LaserJet_Pro_M225dn";
+        deviceUri = "usb://HP/LaserJet%20Pro%20MFP%20M225dn?serial=CNB9J7W356&interface=1";
+        model = "everywhere";
+        description = "HP LaserJet Pro MFP M225dn (USB)";
+        location = "Office";
+        ppdOptions = {
+          PageSize = "Letter";
+        };
+      }
+    ];
+    ensureDefaultPrinter = "HP_LaserJet_Pro_M225dn";
+  };
+
   # Virtualization (desktop-specific)
   virtualisation = {
     docker = {
@@ -235,6 +252,7 @@ in
     smartmontools
     swtpm
     sysfsutils
+    system-config-printer  # GUI for printer management
     texliveFull
     tigervnc
     tk

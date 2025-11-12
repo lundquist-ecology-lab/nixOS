@@ -82,7 +82,19 @@
       jack.enable = true;
       wireplumber.enable = true;
     };
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        gutenprint           # Wide range of printer support
+        gutenprintBin        # Additional Gutenprint binaries
+        brlaser              # Brother laser printer driver
+        brgenml1lpr          # Brother generic LPR driver
+        brgenml1cupswrapper  # Brother CUPS wrapper
+        hplip                # HP printers
+        canon-cups-ufr2      # Canon printers
+        epson-escpr          # Epson printers
+      ];
+    };
     avahi = {
       enable = true;
       nssmdns = true;

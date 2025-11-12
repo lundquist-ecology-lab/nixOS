@@ -289,6 +289,11 @@ in
     onChange = "hyprctl reload || true";
   };
 
+  xdg.configFile."hypr/general.conf" = {
+    source = ./dotfiles/hypr/general-${hostname}.conf;
+    onChange = "hyprctl reload || true";
+  };
+
   # Declarative wallpaper management
   # Put your wallpapers in home/wallpapers/ directory in this repo
   # Then they'll automatically be linked to ~/wallpapers/ on rebuild

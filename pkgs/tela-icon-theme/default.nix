@@ -26,10 +26,10 @@ stdenvNoCC.mkDerivation rec {
 
     mkdir -p $out/share/icons
 
-    # Install all variants
-    bash install.sh -a -d $out/share/icons
+    # Install only black-dark variant
+    bash install.sh -c black -d $out/share/icons
 
-    # Update icon cache for all installed themes
+    # Update icon cache for installed theme
     for theme in $out/share/icons/*; do
       if [ -d "$theme" ]; then
         gtk-update-icon-cache -f -t $theme

@@ -39,6 +39,7 @@
           };
           tela-icon-theme = prev.callPackage ./pkgs/tela-icon-theme { };
           paradise-gtk-theme = prev.callPackage ./pkgs/paradise-gtk-theme { };
+          creality-print = prev.callPackage ./pkgs/creality-print { };
         })
         # Add nix-ai-tools packages
         (final: prev:

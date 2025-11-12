@@ -13,6 +13,57 @@ in
 
   networking.hostName = "edoras";
 
+  # CIFS network mounts for edoras
+  fileSystems."/mnt/onyx" = {
+    device = "//100.100.50.34/onyx";
+    fsType = "cifs";
+    options = [
+      "rw"
+      "vers=3.1.1"
+      "credentials=/etc/smbcredentials"
+      "uid=1000"
+      "gid=100"
+      "forceuid"
+      "forcegid"
+      "file_mode=0777"
+      "dir_mode=0777"
+      "nounix"
+      "noperm"
+      "nobrl"
+      "soft"
+      "mfsymlinks"
+      "cache=strict"
+      "actimeo=0"
+      "x-systemd.automount"
+      "_netdev"
+      "x-systemd.after=network-online.target"
+    ];
+  };
+
+  fileSystems."/mnt/peppy" = {
+    device = "//100.100.50.34/peppy";
+    fsType = "cifs";
+    options = [
+      "rw"
+      "vers=3.1.1"
+      "credentials=/etc/smbcredentials"
+      "uid=1000"
+      "gid=1000"
+      "noauto"
+      "x-systemd.automount"
+      "_netdev"
+      "x-systemd.after=network-online.target"
+    ];
+  };
+
+  environment.etc."smbcredentials" = {
+    mode = "0600";
+    text = ''
+      username=REPLACE_ME
+      password=REPLACE_ME
+    '';
+  };
+
   # Laptop-specific power management
   services = {
     tlp = {

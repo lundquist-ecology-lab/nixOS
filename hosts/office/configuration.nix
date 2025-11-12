@@ -15,7 +15,7 @@ in
 
   # CIFS network mounts for office
   fileSystems."/mnt/onyx" = {
-    device = "//192.168.0.153/onyx";
+    device = "//100.100.50.34/onyx";
     fsType = "cifs";
     options = [
       "rw"
@@ -41,7 +41,7 @@ in
   };
 
   fileSystems."/mnt/peppy" = {
-    device = "//192.168.0.153/peppy";
+    device = "//100.100.50.34/peppy";
     fsType = "cifs";
     options = [
       "rw"

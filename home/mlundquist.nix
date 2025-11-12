@@ -169,6 +169,68 @@ in
       createDirectories = true;
     };
     mime.enable = true;
+
+    # Set default applications for file types
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        # Text files
+        "text/plain" = [ "nvim.desktop" ];
+        "text/x-python" = [ "nvim.desktop" ];
+        "text/x-shellscript" = [ "nvim.desktop" ];
+        "text/x-csrc" = [ "nvim.desktop" ];
+        "text/x-chdr" = [ "nvim.desktop" ];
+        "text/x-c++src" = [ "nvim.desktop" ];
+        "text/x-c++hdr" = [ "nvim.desktop" ];
+        "text/x-java" = [ "nvim.desktop" ];
+        "text/x-makefile" = [ "nvim.desktop" ];
+        "text/x-cmake" = [ "nvim.desktop" ];
+        "text/x-log" = [ "nvim.desktop" ];
+        "text/markdown" = [ "nvim.desktop" ];
+        "text/html" = [ "nvim.desktop" ];
+        "text/css" = [ "nvim.desktop" ];
+        "text/javascript" = [ "nvim.desktop" ];
+        "text/x-tex" = [ "nvim.desktop" ];
+        "application/x-shellscript" = [ "nvim.desktop" ];
+        "application/json" = [ "nvim.desktop" ];
+        "application/xml" = [ "nvim.desktop" ];
+        "application/x-yaml" = [ "nvim.desktop" ];
+      };
+    };
+
+    # Configure Thunar to use kitty as terminal
+    configFile."xfce4/helpers.rc".text = ''
+      TerminalEmulator=kitty
+    '';
+
+    # Create desktop file for nvim in kitty
+    dataFile."applications/nvim.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Neovim
+      Comment=Edit text files in Neovim with Kitty terminal
+      Exec=kitty -e nvim %F
+      Icon=nvim
+      Terminal=false
+      Categories=Utility;TextEditor;
+      MimeType=text/plain;text/x-python;text/x-shellscript;text/x-csrc;text/x-chdr;text/x-c++src;text/x-c++hdr;text/x-java;text/x-makefile;text/x-cmake;text/x-log;text/markdown;text/html;text/css;text/javascript;text/x-tex;application/x-shellscript;application/json;application/xml;application/x-yaml;
+    '';
+
+    # Thunar custom actions for "Open in Terminal"
+    configFile."Thunar/uca.xml".text = ''
+      <?xml version="1.0" encoding="UTF-8"?>
+      <actions>
+        <action>
+          <icon>utilities-terminal</icon>
+          <name>Open Terminal Here</name>
+          <command>kitty --working-directory %f</command>
+          <description>Open Kitty terminal in this folder</description>
+          <patterns>*</patterns>
+          <startup-notify/>
+          <directories/>
+        </action>
+      </actions>
+    '';
   };
 
   gtk = {
@@ -319,8 +381,14 @@ in
         tela-icon-theme
         paradise-gtk-theme
       ];
+      utilities = with pkgs; [
+        creality-print
+        # Thunar and plugins
+        xfce.thunar-volman
+        xfce.thunar-archive-plugin
+      ];
     in
-    essentials ++ aiTools ++ themePackages;
+    essentials ++ aiTools ++ themePackages ++ utilities;
 
   home.stateVersion = "24.05";
 }

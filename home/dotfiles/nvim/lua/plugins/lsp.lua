@@ -52,3 +52,18 @@ vim.lsp.config('r_language_server', {
   cmd = { "R", "--slave", "-e", "languageserver::run()" },
   capabilities = capabilities,
 })
+
+-- Optimize LSP for network shares
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "/mnt/*/*",
+  callback = function()
+    -- Reduce LSP file watching on network shares
+    local clients = vim.lsp.get_clients({bufnr = 0})
+    for _, client in ipairs(clients) do
+      if client.server_capabilities.workspace then
+        -- Disable file watching for network shares
+        client.server_capabilities.workspace.didChangeWatchedFiles = nil
+      end
+    end
+  end,
+})

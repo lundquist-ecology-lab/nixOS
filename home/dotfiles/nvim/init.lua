@@ -41,23 +41,27 @@ vim.cmd("hi StatusLineNC gui=NONE")
 
 -- Optimize neovim for SMB/network shares
 vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = "/mnt/onyx/*",  -- Change this to match your SMB mount point
+    pattern = "/mnt/*/*",  -- Match all network mounts
     callback = function()
         -- Disable swap files to avoid network lag
         vim.opt_local.swapfile = false
         -- Disable backup files that can cause conflicts
         vim.opt_local.backup = false
         vim.opt_local.writebackup = false
+        -- Disable undo file for network shares (major slowdown)
+        vim.opt_local.undofile = false
         -- Reduce file change check frequency (5 seconds instead of default)
         vim.opt_local.updatetime = 5000
         -- Enable autoread for ClaudeCode changes, but only check when window focused
         vim.opt_local.autoread = true
+        -- Reduce syntax sync for large files
+        vim.opt_local.synmaxcol = 200
     end,
 })
 
 -- Check for external file changes when focusing nvim (for ClaudeCode edits)
 vim.api.nvim_create_autocmd({"FocusGained", "BufEnter", "CursorHold"}, {
-    pattern = "/mnt/onyx/*",  -- Change this to match your SMB mount point
+    pattern = "/mnt/*/*",  -- Match all network mounts
     callback = function()
         -- Only check if buffer is valid and not modified
         if vim.bo.buftype == "" and not vim.bo.modified then

@@ -20,7 +20,7 @@ in
     options = [
       "rw"
       "vers=3.1.1"
-      "credentials=/etc/smbcredentials"
+      "credentials=/root/.smbcredentials"
       "uid=1000"
       "gid=100"
       "forceuid"
@@ -46,7 +46,7 @@ in
     options = [
       "rw"
       "vers=3.1.1"
-      "credentials=/etc/smbcredentials"
+      "credentials=/root/.smbcredentials"
       "uid=1000"
       "gid=1000"
       "noauto"
@@ -54,14 +54,6 @@ in
       "_netdev"
       "x-systemd.after=network-online.target"
     ];
-  };
-
-  environment.etc."smbcredentials" = {
-    mode = "0600";
-    text = ''
-      username=REPLACE_ME
-      password=REPLACE_ME
-    '';
   };
 
   # Desktop-specific boot config with VFIO passthrough

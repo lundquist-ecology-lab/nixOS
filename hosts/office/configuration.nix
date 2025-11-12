@@ -20,7 +20,7 @@ in
     options = [
       "rw"
       "vers=3.1.1"
-      "credentials=/etc/smbcredentials"
+      "credentials=/root/.smbcredentials"
       "uid=1000"
       "gid=100"
       "forceuid"
@@ -31,11 +31,14 @@ in
       "noperm"
       "nobrl"
       "mfsymlinks"
-      # Performance optimizations
+      # Performance optimizations for editing files
       "cache=loose"           # Better performance, still reasonably safe
-      "actimeo=30"           # Cache attributes for 30 seconds (was 0!)
-      "noserverino"          # Use client-generated inode numbers for better performance
-      "nosharesock"          # Don't share TCP connection across mounts
+      "actimeo=60"            # Cache attributes for 60 seconds (increased from 30)
+      "noserverino"           # Use client-generated inode numbers for better performance
+      "nosharesock"           # Don't share TCP connection across mounts
+      "rsize=130048"          # Larger read buffer (128KB)
+      "wsize=130048"          # Larger write buffer (128KB)
+      "echo_interval=60"      # Keep connection alive
       # Systemd integration
       "x-systemd.automount"
       "x-systemd.idle-timeout=60"
@@ -50,7 +53,7 @@ in
     options = [
       "rw"
       "vers=3.1.1"
-      "credentials=/etc/smbcredentials"
+      "credentials=/root/.smbcredentials"
       "uid=1000"
       "gid=1000"
       "forceuid"
@@ -72,14 +75,6 @@ in
       "_netdev"
       "x-systemd.after=network-online.target"
     ];
-  };
-
-  environment.etc."smbcredentials" = {
-    mode = "0600";
-    text = ''
-      username=REPLACE_ME
-      password=REPLACE_ME
-    '';
   };
 
   # Boot config for AMD APU (no VFIO passthrough)

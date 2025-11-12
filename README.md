@@ -1,6 +1,9 @@
-# moria NixOS flake
+# NixOS Configuration
 
-This repo holds the NixOS + Home Manager configuration that mirrors the current Arch Linux setup on **moria**.
+This repo holds the NixOS + Home Manager configuration for multiple hosts:
+- **moria** - Desktop with NVIDIA GPU and VFIO passthrough
+- **office** - Desktop with AMD APU
+- **edoras** - Laptop with power management
 
 ## First-time setup
 
@@ -55,11 +58,11 @@ This repo holds the NixOS + Home Manager configuration that mirrors the current 
 
 Clone the repo (HTTPS works out of the box now that everything is public):
 ```bash
-git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria
+git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-config
 ```
-Build and activate:
+Build and activate (replace `<hostname>` with `moria`, `office`, or `edoras`):
 ```bash
-sudo nixos-rebuild switch --flake ~/nixos-moria#moria
+sudo nixos-rebuild switch --flake ~/nixos-config#<hostname>
 ```
 
 ## After manual NixOS installation
@@ -70,19 +73,53 @@ If you prefer to perform the base NixOS installation yourself (e.g. via `nixos-i
 2. Install git if it is not present yet: `nix-shell -p git` or `nix profile install nixpkgs#git`.
 3. Clone the repo (HTTPS is fine):
    ```bash
-   git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-moria
+   git clone https://github.com/lundquist-ecology-lab/nixOS.git ~/nixos-config
    ```
-4. (Optional but recommended) Replace `hardware-configuration.nix` with the one generated on the new system so UUIDs match:
+4. (Optional but recommended) Replace `hardware-configuration.nix` in the appropriate host directory with the one generated on the new system so UUIDs match:
    ```bash
-   sudo nixos-generate-config --show-hardware-config > ~/nixos-moria/hardware-configuration.nix
+   sudo nixos-generate-config --show-hardware-config > ~/nixos-config/hosts/<hostname>/hardware-configuration.nix
    ```
-5. Review `configuration.nix` for any machine-specific tweaks (user password, host name, GPU driver choices, etc.).
-6. Apply everything in one go:
+5. Review `hosts/<hostname>/configuration.nix` for any machine-specific tweaks (user password, host name, GPU driver choices, etc.).
+6. Apply everything in one go (replace `<hostname>` with `moria`, `office`, or `edoras`):
    ```bash
-   sudo nixos-rebuild switch --flake ~/nixos-moria#moria
+   sudo nixos-rebuild switch --flake ~/nixos-config#<hostname>
    ```
 
 From then on, keep editing the repo, committing, and running the same rebuild command to stay in sync with the Arch setup you mirrored.
+
+## SMB/CIFS Network Share Setup
+
+All hosts are configured with CIFS network mounts that require credentials. These credentials are stored in `/root/.smbcredentials` and persist through NixOS rebuilds.
+
+**First-time setup (run on each host):**
+
+1. Create the credentials file:
+   ```bash
+   sudo touch /root/.smbcredentials
+   sudo chmod 600 /root/.smbcredentials
+   ```
+
+2. Edit the file and add your credentials:
+   ```bash
+   sudo nano /root/.smbcredentials
+   ```
+
+   Add these lines (replace with your actual credentials):
+   ```
+   username=your_actual_username
+   password=your_actual_password
+   ```
+
+3. Save and rebuild:
+   ```bash
+   sudo nixos-rebuild switch --flake ~/nixos-moria#<hostname>
+   ```
+
+The credentials file will persist through all future rebuilds since it's not managed by NixOS.
+
+**Configured mounts:**
+- **edoras** & **office**: `/mnt/onyx` and `/mnt/peppy` (via Tailscale IP `100.100.50.34`)
+- **moria**: `/mnt/onyx` and `/mnt/peppy` (via local IP `192.168.0.153`)
 
 ## Daily workflow
 
@@ -93,10 +130,11 @@ From then on, keep editing the repo, committing, and running the same rebuild co
   git commit -m "Describe your change"
   git push
   ```
-- Apply changes:
+- Apply changes (replace `<hostname>` with `moria`, `office`, or `edoras`):
   ```bash
-  sudo nixos-rebuild switch --flake ~/nixos-moria#moria
+  sudo nixos-rebuild switch --flake ~/nixos-config#<hostname>
   ```
+  Or if your repo is cloned to a different location, adjust the path accordingly.
 
 ## Managed dotfiles
 
@@ -109,4 +147,4 @@ From then on, keep editing the repo, committing, and running the same rebuild co
   1. Edit the fork (branch `master`) in `~/sysc-greet`.
   2. `git commit` and `git push origin master`.
   3. Back in this repo, run `nix build .#sysc-greet` once; copy the new `hash = ...` it prints into `pkgs/sysc-greet/default.nix`.
-  4. `sudo nixos-rebuild switch --flake ~/nixos-moria#moria`.
+  4. `sudo nixos-rebuild switch --flake ~/nixos-config#<hostname>` (replace `<hostname>` with your current host).

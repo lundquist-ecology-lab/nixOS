@@ -93,6 +93,8 @@
         hplip                # HP printers
         canon-cups-ufr2      # Canon printers
         epson-escpr          # Epson printers
+        foomatic-filters     # Foomatic printer filter scripts
+        foomatic-db-ppds     # PPD files for many printers including Konica Minolta
       ];
     };
     avahi = {

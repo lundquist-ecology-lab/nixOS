@@ -46,8 +46,8 @@ in
           "git"
         ];
       };
-      enableAutosuggestions = true;
-      enableSyntaxHighlighting = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
       history = {
         path = "${config.xdg.dataHome}/zsh/history";
         size = 50000;

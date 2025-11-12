@@ -277,7 +277,7 @@
           wget
           wl-clipboard
           wlr-randr
-          wofi
+          rofi-wayland
           xorg.xrandr
           xournalpp
           yazi
@@ -296,7 +296,6 @@
           ncpamixer
           onlyoffice-desktopeditors
           ripdrag
-          wlogout
           zoom-us
           hyprcursor
           hyprlock

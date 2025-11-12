@@ -80,6 +80,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = {
                 inherit unstablePkgs inputs;
+                hostname = "moria";
               };
               home-manager.users.mlundquist = import ./home/mlundquist.nix;
             }
@@ -100,6 +101,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = {
                 inherit unstablePkgs inputs;
+                hostname = "office";
               };
               home-manager.users.mlundquist = import ./home/mlundquist.nix;
             }
@@ -120,6 +122,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = {
                 inherit unstablePkgs inputs;
+                hostname = "edoras";
               };
               home-manager.users.mlundquist = import ./home/mlundquist.nix;
             }

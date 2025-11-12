@@ -1,4 +1,4 @@
-{ config, pkgs, unstablePkgs ? pkgs, lib, osConfig, ... }:
+{ config, pkgs, unstablePkgs ? pkgs, lib, hostname, ... }:
 
 let
   nvmPkg =
@@ -208,15 +208,17 @@ in
     recursive = true;
   };
 
-  # Create host-specific monitor config symlink
-  xdg.configFile."hypr/monitors.conf".source =
-    let hostname = osConfig.networking.hostName;
-    in ./dotfiles/hypr/monitors-${hostname}.conf;
+  # Create host-specific monitor config symlink (force = true to override the recursive copy)
+  xdg.configFile."hypr/monitors.conf" = {
+    source = ./dotfiles/hypr/monitors-${hostname}.conf;
+    force = true;
+  };
 
-  # Create host-specific keybindings symlink
-  xdg.configFile."hypr/keybinds.conf".source =
-    let hostname = osConfig.networking.hostName;
-    in ./dotfiles/hypr/keybinds-${hostname}.conf;
+  # Create host-specific keybindings symlink (force = true to override the recursive copy)
+  xdg.configFile."hypr/keybinds.conf" = {
+    source = ./dotfiles/hypr/keybinds-${hostname}.conf;
+    force = true;
+  };
 
   # Declarative wallpaper management
   # Put your wallpapers in home/wallpapers/ directory in this repo

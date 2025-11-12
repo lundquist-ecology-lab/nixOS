@@ -10,7 +10,7 @@
 
 window {
     background-color: @background-color;
-    border: 5px;
+    border: 2px;
     border-color: @border-color;
     border-radius: 12px;
     padding: 10px;
@@ -19,6 +19,7 @@ window {
 
 mainbox {
     background-color: @background-color;
+    text-color: @foreground-color;
     children: [inputbar, listview];
 }
 
@@ -32,18 +33,19 @@ inputbar {
 }
 
 prompt {
-    background-color: @selected-color;
+    background-color: transparent;
     text-color: @foreground-color;
 }
 
 listview {
-    background-color: @background-color;
+    background-color: transparent;
+    text-color: @foreground-color;
     lines: 5;
     spacing: 5px;
 }
 
 element {
-    background-color: @background-color;
+    background-color: transparent;
     text-color: @foreground-color;
     border-radius: 8px;
     padding: 8px;
@@ -52,4 +54,9 @@ element {
 element selected {
     background-color: @selected-color;
     text-color: @foreground-color;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
 }

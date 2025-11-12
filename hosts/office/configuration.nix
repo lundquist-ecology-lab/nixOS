@@ -30,11 +30,15 @@ in
       "nounix"
       "noperm"
       "nobrl"
-      "soft"
       "mfsymlinks"
-      "cache=strict"
-      "actimeo=0"
+      # Performance optimizations
+      "cache=loose"           # Better performance, still reasonably safe
+      "actimeo=30"           # Cache attributes for 30 seconds (was 0!)
+      "noserverino"          # Use client-generated inode numbers for better performance
+      "nosharesock"          # Don't share TCP connection across mounts
+      # Systemd integration
       "x-systemd.automount"
+      "x-systemd.idle-timeout=60"
       "_netdev"
       "x-systemd.after=network-online.target"
     ];
@@ -49,8 +53,22 @@ in
       "credentials=/etc/smbcredentials"
       "uid=1000"
       "gid=1000"
+      "forceuid"
+      "forcegid"
+      "file_mode=0755"
+      "dir_mode=0755"
+      "nounix"
+      "noperm"
+      "nobrl"
+      # Performance optimizations
+      "cache=loose"
+      "actimeo=30"
+      "noserverino"
+      "nosharesock"
+      # Systemd integration
       "noauto"
       "x-systemd.automount"
+      "x-systemd.idle-timeout=60"
       "_netdev"
       "x-systemd.after=network-online.target"
     ];

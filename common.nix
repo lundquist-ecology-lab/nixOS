@@ -236,6 +236,9 @@
           netcat-openbsd
           openssh
           pandoc
+          # LaTeX/pandoc support
+          librsvg         # SVG support for LaTeX
+          biber           # Bibliography processor for biblatex
           papirus-icon-theme
           pavucontrol
           pcmanfm
@@ -254,6 +257,9 @@
             seaborn
             statsmodels
             python-docx
+            # Pandoc support
+            pandocfilters
+            panflute
           ]))
           pyenv
           qt5.qtwayland

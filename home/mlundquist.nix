@@ -145,6 +145,13 @@ in
       extraPackages = with pkgs; [
         tree-sitter
         python311Packages.pynvim
+        # Language servers
+        texlab          # LaTeX LSP
+        lua-language-server
+        nil             # Nix LSP
+        nodePackages.bash-language-server
+        nodePackages.typescript-language-server
+        pyright         # Python LSP
       ];
     };
   };

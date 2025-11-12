@@ -143,6 +143,7 @@ in
     brightnessctl
     sysc-greet
     niri
+    texliveFull
   ];
 
   # Greeter configuration files

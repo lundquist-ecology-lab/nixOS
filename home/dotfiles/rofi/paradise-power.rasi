@@ -60,3 +60,26 @@ element-text {
     background-color: transparent;
     text-color: inherit;
 }
+
+message {
+    background-color: @background-color;
+    text-color: @foreground-color;
+    border: 2px;
+    border-color: @border-color;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @foreground-color;
+}
+
+error-message {
+    background-color: @background-color;
+    text-color: @foreground-color;
+    border: 2px;
+    border-color: #B66467;
+    border-radius: 8px;
+    padding: 8px;
+}

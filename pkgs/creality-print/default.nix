@@ -6,11 +6,11 @@
 
 let
   pname = "creality-print";
-  version = "6.1.0-beta";
+  version = "6.3.0";
 
   src = fetchurl {
-    url = "https://github.com/CrealityOfficial/CrealityPrint/releases/download/${version}/Creality_Print-${version}-x86_64-Release.AppImage";
-    hash = "sha256-zOz6YAlSEqCRDmbuSk6gCSs2tSlgfF1D68pMTPMpYy0=";
+    url = "https://github.com/CrealityOfficial/CrealityPrint/releases/download/v${version}/CrealityPrint_Ubuntu2004-V${version}.3420-x86_64-Release.AppImage";
+    hash = "sha256-ge/VhemxeFrkUsojfV61eHrhWyVJTj0jXtVyRH2afo0=";
   };
 
   appimageContents = appimageTools.extractType2 {
@@ -81,7 +81,7 @@ appimageTools.wrapType2 {
       $out/share/applications/crealityprint.desktop
 
     # Install icon
-    install -Dm644 ${appimageContents}/crealityprint.png \
+    install -Dm644 ${appimageContents}/CrealityPrint.png \
       $out/share/pixmaps/crealityprint.png
   '';
 
@@ -90,6 +90,6 @@ appimageTools.wrapType2 {
     homepage = "https://www.creality.com/";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
-    mainProgram = "crealityprint";
+    mainProgram = "creality-print";
   };
 }

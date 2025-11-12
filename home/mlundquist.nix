@@ -203,21 +203,21 @@ in
     x11.enable = true;
   };
 
+  # Copy hypr config but exclude the host-specific template files
   xdg.configFile."hypr" = {
     source = ./dotfiles/hypr;
     recursive = true;
   };
 
-  # Create host-specific monitor config symlink (force = true to override the recursive copy)
+  # Override with host-specific configs
   xdg.configFile."hypr/monitors.conf" = {
     source = ./dotfiles/hypr/monitors-${hostname}.conf;
-    force = true;
+    onChange = "hyprctl reload || true";
   };
 
-  # Create host-specific keybindings symlink (force = true to override the recursive copy)
   xdg.configFile."hypr/keybinds.conf" = {
     source = ./dotfiles/hypr/keybinds-${hostname}.conf;
-    force = true;
+    onChange = "hyprctl reload || true";
   };
 
   # Declarative wallpaper management

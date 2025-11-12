@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, fetchFromGitHub, sass, nodejs, gnumake }:
+{ lib, stdenvNoCC, fetchFromGitHub, dart-sass, gnumake }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "paradise-gtk-theme";
@@ -11,18 +11,26 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "sha256-NXP2h/qXqLy9tQ+TQ+zuXFP4syywIj34k+Fts/mUqps=";
   };
 
-  nativeBuildInputs = [ sass nodejs gnumake ];
+  nativeBuildInputs = [ dart-sass gnumake ];
+
+  enableParallelBuilding = true;
 
   buildPhase = ''
     runHook preBuild
-    make
+    # Compile SASS files from scss/ directory to current directory
+    find scss -name '*.scss' -type f | while read -r file; do
+      outfile="''${file#scss/}"
+      outfile="''${outfile%.scss}.css"
+      mkdir -p "$(dirname "$outfile")"
+      sass --no-source-map "$file" "$outfile"
+    done
     runHook postBuild
   '';
 
   installPhase = ''
     runHook preInstall
-    mkdir -p $out/share/themes
-    make install DESTDIR=$out PREFIX=/share
+    mkdir -p $out/share/themes/paradise
+    cp -r assets gtk-3.0 index.theme $out/share/themes/paradise/
     runHook postInstall
   '';
 

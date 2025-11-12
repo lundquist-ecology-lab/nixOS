@@ -264,6 +264,10 @@ in
     source = ./dotfiles/.local/bin/env;
     executable = true;
   };
+  home.file.".local/bin/wpctl-cycle-sink.sh" = {
+    source = ./dotfiles/.local/bin/wpctl-cycle-sink.sh;
+    executable = true;
+  };
 
   home.packages =
     let

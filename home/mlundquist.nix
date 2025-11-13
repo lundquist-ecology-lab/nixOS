@@ -405,12 +405,11 @@ in
   };
 
   # Override with host-specific waybar styles
-  xdg.configFile."waybar/style.css" = lib.mkIf (hostname == "edoras" || hostname == "moria") {
-    source = ./dotfiles/waybar/style-hidpi.css;
-  };
-
-  xdg.configFile."waybar/style.css" = lib.mkIf (hostname == "office") {
-    source = ./dotfiles/waybar/style-1080p.css;
+  xdg.configFile."waybar/style.css" = {
+    source = if (hostname == "office") then
+      ./dotfiles/waybar/style-1080p.css
+    else
+      ./dotfiles/waybar/style-hidpi.css;
   };
 
   xdg.configFile."mako" = {

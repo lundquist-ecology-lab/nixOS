@@ -244,7 +244,6 @@
           mpv
           msmtp
           nano
-          xfce.thunar
           neovim
           ninja
           nwg-look
@@ -285,6 +284,7 @@
           pyenv
           qt5.qtwayland
           ranger
+          remmina
           ripgrep
           rsync
           spotify-player
@@ -294,7 +294,6 @@
           tmux
           trash-cli
           tree-sitter
-          xfce.tumbler
           udiskie
           udisks2
           unzip
@@ -349,6 +348,14 @@
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
       ];
+      config = {
+        common = {
+          default = [ "hyprland" "gtk" ];
+        };
+        hyprland = {
+          default = [ "hyprland" "gtk" ];
+        };
+      };
       # wlr portal disabled - using xdg-desktop-portal-hyprland from programs.hyprland instead
       # wlr.enable = true;
     };

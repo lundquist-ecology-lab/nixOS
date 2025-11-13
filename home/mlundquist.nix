@@ -82,7 +82,7 @@ in
   home.homeDirectory = "/home/mlundquist";
 
   home.sessionVariables = {
-    XDG_FILE_MANAGER = "thunar";
+    XDG_FILE_MANAGER = "kitty -e yazi";
     PULSE_PROP = "media.role=Music";
     MOZ_ENABLE_WAYLAND = "1";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -119,7 +119,7 @@ in
         size = 50000;
       };
       initContent = lib.mkBefore ''
-        export XDG_FILE_MANAGER=thunar
+        export XDG_FILE_MANAGER="kitty -e yazi"
         export PULSE_PROP='media.role=Music'
         export MOZ_ENABLE_WAYLAND=1
         export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -309,11 +309,6 @@ in
       startupNotify = false;
     };
 
-    # Configure Thunar to use kitty as terminal
-    configFile."xfce4/helpers.rc".text = ''
-      TerminalEmulator=kitty
-    '';
-
     # Create desktop file for nvim in kitty
     dataFile."applications/nvim.desktop".text = ''
       [Desktop Entry]
@@ -327,21 +322,6 @@ in
       MimeType=text/plain;text/x-python;text/x-shellscript;text/x-csrc;text/x-chdr;text/x-c++src;text/x-c++hdr;text/x-java;text/x-makefile;text/x-cmake;text/x-log;text/markdown;text/html;text/css;text/javascript;text/x-tex;application/x-shellscript;application/json;application/xml;application/x-yaml;
     '';
 
-    # Thunar custom actions for "Open in Terminal"
-    configFile."Thunar/uca.xml".text = ''
-      <?xml version="1.0" encoding="UTF-8"?>
-      <actions>
-        <action>
-          <icon>utilities-terminal</icon>
-          <name>Open Terminal Here</name>
-          <command>kitty --working-directory %f</command>
-          <description>Open Kitty terminal in this folder</description>
-          <patterns>*</patterns>
-          <startup-notify/>
-          <directories/>
-        </action>
-      </actions>
-    '';
   };
 
   gtk = {
@@ -503,9 +483,6 @@ in
           polycat
           pulseaudio
           xwayland-satellite
-          # Thunar and plugins
-          xfce.thunar-volman
-          xfce.thunar-archive-plugin
         ]) ++ [
           orcaSlicerSatelliteLauncher
         ];

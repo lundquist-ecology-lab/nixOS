@@ -8,6 +8,7 @@ in
 {
   imports = [
     ../../common.nix
+    ../../modules/niri.nix
     ./hardware-configuration.nix
   ];
 
@@ -95,7 +96,6 @@ in
 
   # Laptop-specific programs
   programs = {
-    niri.enable = true;
   };
 
   # Laptop-specific hardware
@@ -134,7 +134,6 @@ in
     powertop
     brightnessctl
     sysc-greet
-    niri
     texliveFull
   ];
 
@@ -158,6 +157,8 @@ in
     "d /var/cache/sysc-greet 0755 greeter greeter -"
     "L /usr/share/sysc-greet - - - - ${syscGreetShare}"
     "L /usr/share/wayland-sessions - - - - /etc/wayland-sessions"
+    "d /run/current-system/sw/share/wayland-sessions 0755 root root -"
+    "L /run/current-system/sw/share/wayland-sessions/niri.desktop - - - - /etc/wayland-sessions/niri.desktop"
   ];
 
   # Note: Your laptop-specific waybar config should go in home-manager

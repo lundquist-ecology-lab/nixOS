@@ -137,24 +137,7 @@
 
   programs = {
     zsh.enable = true;
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-      package = unstablePkgs.hyprland;
-      portalPackage = unstablePkgs.xdg-desktop-portal-hyprland;
-    };
   };
-
-  # Create Hyprland session file for display managers
-  # Put it in /run/current-system for sysc-greet to find
-  environment.etc."wayland-sessions/hyprland.desktop".text = ''
-    [Desktop Entry]
-    Name=Hyprland
-    Comment=An intelligent dynamic tiling Wayland compositor
-    Exec=Hyprland
-    Type=Application
-    DesktopNames=Hyprland
-  '';
 
   users = {
     mutableUsers = true;
@@ -232,7 +215,6 @@
           htop
           hunspell
           hunspellDicts.en_US
-          hyprshot
           imagemagick
           imv
           inetutils
@@ -321,9 +303,6 @@
           onlyoffice-desktopeditors
           ripdrag
           zoom-us
-          hyprcursor
-          hyprlock
-          hyprpaper
         ];
       in
       stable
@@ -350,14 +329,9 @@
       ];
       config = {
         common = {
-          default = [ "hyprland" "gtk" ];
-        };
-        hyprland = {
-          default = [ "hyprland" "gtk" ];
+          default = [ "gtk" ];
         };
       };
-      # wlr portal disabled - using xdg-desktop-portal-hyprland from programs.hyprland instead
-      # wlr.enable = true;
     };
     mime.enable = true;
   };

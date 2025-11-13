@@ -8,6 +8,7 @@ in
 {
   imports = [
     ../../common.nix
+    ../../modules/hyprland.nix
     ./hardware-configuration.nix
   ];
 

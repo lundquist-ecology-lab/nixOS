@@ -161,7 +161,6 @@ in
         setopt NO_BEEP
         alias fzf="fzf-tmux -p 70%"
         alias dummy="sh /home/mlundquist/bin/dummy.sh"
-        alias monitor="hyprctl monitors"
 
         export VISUAL="kitty nvim"
         export EDITOR="kitty nvim"
@@ -356,24 +355,24 @@ in
     x11.enable = true;
   };
 
-  # Copy hypr config but exclude the host-specific template files
-  xdg.configFile."hypr" = {
+  # Copy hypr config but exclude the host-specific template files (only for moria and office)
+  xdg.configFile."hypr" = lib.mkIf (hostname == "moria" || hostname == "office") {
     source = ./dotfiles/hypr;
     recursive = true;
   };
 
-  # Override with host-specific configs
-  xdg.configFile."hypr/monitors.conf" = {
+  # Override with host-specific configs (only for moria and office)
+  xdg.configFile."hypr/monitors.conf" = lib.mkIf (hostname == "moria" || hostname == "office") {
     source = ./dotfiles/hypr/monitors-${hostname}.conf;
     onChange = "hyprctl reload || true";
   };
 
-  xdg.configFile."hypr/keybinds.conf" = {
+  xdg.configFile."hypr/keybinds.conf" = lib.mkIf (hostname == "moria" || hostname == "office") {
     source = ./dotfiles/hypr/keybinds-${hostname}.conf;
     onChange = "hyprctl reload || true";
   };
 
-  xdg.configFile."hypr/general.conf" = {
+  xdg.configFile."hypr/general.conf" = lib.mkIf (hostname == "moria" || hostname == "office") {
     source = ./dotfiles/hypr/general-${hostname}.conf;
     onChange = "hyprctl reload || true";
   };

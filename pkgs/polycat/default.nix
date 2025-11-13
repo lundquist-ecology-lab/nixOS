@@ -3,9 +3,12 @@
 , fetchFromGitHub
 }:
 
+let
+  version = "2.0.0";
+in
 stdenv.mkDerivation {
   pname = "polycat";
-  version = "2.0.0";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "2IMT";

@@ -26,7 +26,7 @@ let
     categories = [ "Graphics" "3DGraphics" ];
   };
 in
-appimageTools.wrapType2 {
+appimageTools.wrapType2 rec {
   inherit pname version src;
 
   extraPkgs = pkgs: with pkgs; [
@@ -79,6 +79,11 @@ appimageTools.wrapType2 {
       install -Dm644 ${appimageContents}/OrcaSlicer.png \
         $out/share/pixmaps/orca-slicer.png
     fi
+  '';
+
+  postFixup = ''
+    wrapProgram $out/bin/${pname} \
+      --set LANGUAGE en_US.UTF-8
   '';
 
   meta = with lib; {

@@ -395,6 +395,7 @@ in
       utilities = with pkgs; [
         orca-slicer-bin
         polycat
+        pulseaudio
         # Thunar and plugins
         xfce.thunar-volman
         xfce.thunar-archive-plugin

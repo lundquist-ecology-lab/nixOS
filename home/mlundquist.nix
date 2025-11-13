@@ -9,6 +9,72 @@ let
     if pkgs ? bibata-cursor-theme then pkgs.bibata-cursor-theme
     else if pkgs ? bibata-cursors then pkgs.bibata-cursors
     else null;
+  orcaSlicerSatelliteLauncher = pkgs.writeShellApplication {
+    name = "orca-slicer-satellite";
+    runtimeInputs = with pkgs; [
+      coreutils
+      procps
+      xwayland-satellite
+    ];
+    text = ''
+      set -euo pipefail
+      shopt -s nullglob
+
+      log_root="''${XDG_RUNTIME_DIR:-/tmp}"
+      log_file="$log_root/xwayland-satellite.log"
+
+      check_satellite() {
+        pgrep -f "xwayland-satellite" >/dev/null 2>&1
+      }
+
+      start_satellite() {
+        echo "Starting xwayland-satellite..." >&2
+        mkdir -p "$log_root"
+        xwayland-satellite >"$log_file" 2>&1 &
+        for _ in $(seq 1 50); do
+          if check_satellite; then
+            sleep 1
+            return 0
+          fi
+          sleep 0.1
+        done
+        echo "Error: Failed to start xwayland-satellite" >&2
+        exit 1
+      }
+
+      get_satellite_display() {
+        runtime_dir="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+        for sock in "$runtime_dir"/xwls-*; do
+          [ -S "$sock" ] || continue
+          sock_id="''${sock##*-}"
+          if [[ "$sock_id" =~ ^[0-9]+$ ]]; then
+            printf ":%s\n" "$sock_id"
+            return 0
+          fi
+        done
+        best=""
+        for display in /tmp/.X11-unix/X*; do
+          [ -S "$display" ] || continue
+          display_num="''${display##*/X}"
+          if [[ "$display_num" =~ ^[0-9]+$ ]] && [ "$display_num" -ge 1 ]; then
+            best=":$display_num"
+          fi
+        done
+        if [ -n "$best" ]; then
+          printf "%s\n" "$best"
+        else
+          printf ":0\n"
+        fi
+      }
+
+      check_satellite || start_satellite
+
+      xdisplay="$(get_satellite_display)"
+      echo "Using display: $xdisplay" >&2
+
+      exec env DISPLAY="$xdisplay" WEBKIT_DISABLE_DMABUF_RENDERER=1 ${pkgs.orca-slicer-bin}/bin/orca-slicer "$@"
+    '';
+  };
 in
 
 {
@@ -160,6 +226,25 @@ in
     ssh-agent.enable = true;
   };
 
+  systemd.user.services.xwayland-satellite = {
+    Unit = {
+      Description = "Xwayland satellite for rootless X11 apps";
+      Documentation = "https://github.com/Supreeeme/xwayland-satellite";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "notify";
+      NotifyAccess = "all";
+      ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -202,6 +287,26 @@ in
         "application/xml" = [ "nvim.desktop" ];
         "application/x-yaml" = [ "nvim.desktop" ];
       };
+    };
+
+    desktopEntries.orca-slicer-satellite = {
+      name = "OrcaSlicer (xwayland-satellite)";
+      genericName = "3D Printing Software";
+      comment = "OrcaSlicer running via xwayland-satellite for better Wayland compatibility";
+      icon = "orca-slicer";
+      exec = "${orcaSlicerSatelliteLauncher}/bin/orca-slicer-satellite %U";
+      terminal = false;
+      type = "Application";
+      categories = [ "Graphics" "3DGraphics" "Engineering" ];
+      mimeType = [
+        "model/stl"
+        "model/3mf"
+        "application/vnd.ms-3mfdocument"
+        "application/prs.wavefront-obj"
+        "application/x-amf"
+        "x-scheme-handler/orcaslicer"
+      ];
+      startupNotify = false;
     };
 
     # Configure Thunar to use kitty as terminal
@@ -392,14 +497,18 @@ in
         tela-icon-theme
         paradise-gtk-theme
       ];
-      utilities = with pkgs; [
-        orca-slicer-bin
-        polycat
-        pulseaudio
-        # Thunar and plugins
-        xfce.thunar-volman
-        xfce.thunar-archive-plugin
-      ];
+      utilities =
+        (with pkgs; [
+          orca-slicer-bin
+          polycat
+          pulseaudio
+          xwayland-satellite
+          # Thunar and plugins
+          xfce.thunar-volman
+          xfce.thunar-archive-plugin
+        ]) ++ [
+          orcaSlicerSatelliteLauncher
+        ];
     in
     essentials ++ aiTools ++ themePackages ++ utilities;
 

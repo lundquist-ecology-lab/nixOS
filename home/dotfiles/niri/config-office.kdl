@@ -81,7 +81,7 @@ environment {
 }
 
 cursor {
-    xcursor-theme "BreezeX-RosePine-Linux"
+    xcursor-theme "Bibata-Modern-Classic"
     xcursor-size 24
 }
 

@@ -131,7 +131,7 @@ in
       "/run/current-system/sw/share"
       "/usr/share"
     ];
-    XCURSOR_THEME = "rose-pine-hyprcursor";
+    XCURSOR_THEME = "Bibata-Modern-Classic";
     XCURSOR_SIZE = "24";
   };
 
@@ -143,6 +143,7 @@ in
     sysc-greet
     texliveFull
     rose-pine-hyprcursor
+    bibata-cursors  # X11 cursor theme for Niri
   ];
 
   # Greeter configuration files
@@ -175,7 +176,7 @@ in
       prefer-no-csd
 
       cursor {
-          xcursor-theme "rose-pine-hyprcursor"
+          xcursor-theme "Bibata-Modern-Classic"
           xcursor-size 24
       }
 
@@ -183,7 +184,7 @@ in
           XDG_CACHE_HOME "/var/cache/sysc-greet"
           XDG_DATA_DIRS "/run/current-system/sw/share:/usr/share"
           HOME "/var/lib/greeter"
-          XCURSOR_THEME "rose-pine-hyprcursor"
+          XCURSOR_THEME "Bibata-Modern-Classic"
           XCURSOR_SIZE "24"
       }
 

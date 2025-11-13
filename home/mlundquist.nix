@@ -349,8 +349,8 @@ in
       name = "Tela-black-dark";
     };
     cursorTheme = {
-      package = pkgs.rose-pine-hyprcursor;
-      name = "rose-pine-hyprcursor";
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
       size = 24;
     };
     gtk3.extraConfig = {
@@ -361,10 +361,10 @@ in
     };
   };
 
-  # Set up cursor theme for Wayland/Hyprland
+  # Set up cursor theme for Wayland (Niri uses X11 cursor format)
   home.pointerCursor = {
-    package = pkgs.rose-pine-hyprcursor;
-    name = "rose-pine-hyprcursor";
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
     size = 24;
     gtk.enable = true;
     x11.enable = true;

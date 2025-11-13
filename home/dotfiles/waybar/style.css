@@ -6,7 +6,7 @@
     border-radius: 12px;
     font-family: "JetbrainsMono Nerd Font", Helvetica, Arial, sans-serif;
     font-weight: 600;
-    font-size: 9px;
+    font-size: 14px;
     min-height: 0;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }

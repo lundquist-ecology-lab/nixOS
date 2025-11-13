@@ -180,6 +180,10 @@ in
           xcursor-size 24
       }
 
+      hotkey-overlay {
+          skip-at-startup
+      }
+
       environment {
           XDG_CACHE_HOME "/var/cache/sysc-greet"
           XDG_DATA_DIRS "/run/current-system/sw/share:/usr/share"

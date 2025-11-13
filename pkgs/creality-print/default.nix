@@ -19,7 +19,7 @@ let
 
   desktopItem = makeDesktopItem {
     name = "CrealityPrint";
-    exec = "crealityprint";
+    exec = "creality-print";
     icon = "crealityprint";
     desktopName = "Creality Print";
     comment = "Creality Print 3-D slicer";
@@ -69,7 +69,8 @@ appimageTools.wrapType2 {
     libsForQt5.qtsvg
     libsForQt5.qtmultimedia
     libsForQt5.qtx11extras
-    webkitgtk_4_1
+    libsoup
+    webkitgtk_4_0
     ffmpeg
     zlib
     wayland

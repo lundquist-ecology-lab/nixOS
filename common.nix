@@ -216,6 +216,7 @@
           file-roller
           firefox
           flatpak
+          foot
           fzf
           git
           gh

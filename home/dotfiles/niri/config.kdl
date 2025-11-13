@@ -141,7 +141,7 @@ window-rule {
 
 
 window-rule {
-    match app-id="^wofi$"
+    match app-id="^rofi$"
     default-column-width { proportion 0.3; }
 
     block-out-from "screen-capture"
@@ -191,7 +191,7 @@ window-rule {
 binds {
     // Application launching
     Mod+Return { spawn "kitty"; }
-    Mod+Space { spawn "wofi" "--show" "drun"; }
+    Mod+Space { spawn "rofi" "-show" "drun" "-theme" "/home/mlundquist/.config/rofi/paradise-drun.rasi"; }
     Mod+W { spawn "firefox"; }
     Mod+N { spawn "kitty" "-e" "yazi"; }
     Mod+G { spawn "gamescope" "-w" "1920" "-h" "1200" "-f" "--" "steam"; }
@@ -203,7 +203,7 @@ binds {
 
     // System actions
     Mod+Q { close-window; }
-    Mod+M { spawn "wlogout"; }
+    Mod+M { spawn "/home/mlundquist/.local/bin/powermenu.sh"; }
     Mod+Shift+P { spawn "swaylock"; }
     Mod+Shift+E { quit; }
     Mod+Shift+W { spawn "sh" "-c" "pkill swaybg && swaybg -i /home/mlundquist/wallpapers/wallpaper.jpg -m fill &"; }

@@ -14,26 +14,7 @@ in
 
   networking = {
     hostName = "edoras";
-    networkmanager = {
-      wifi.backend = "iwd";
-      ensureProfiles = {
-        enable = true;
-        profiles."usb-c-ethernet" = {
-          connection = {
-            id = "USB-C Ethernet";
-            type = "ethernet";
-            interface-name = "enp0s13f0u2u3c2";
-            autoconnect = true;
-            autoconnect-priority = 10;
-          };
-          ipv4.method = "auto";
-          ipv6 = {
-            method = "auto";
-            "addr-gen-mode" = "stable-privacy";
-          };
-        };
-      };
-    };
+    networkmanager.wifi.backend = "iwd";
     wireless.iwd.enable = true;
   };
 
@@ -179,6 +160,24 @@ in
       }
     '';
     "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
+    "NetworkManager/system-connections/USB-C Ethernet.nmconnection" = {
+      mode = "0600";
+      text = ''
+        [connection]
+        id=USB-C Ethernet
+        type=ethernet
+        interface-name=enp0s13f0u2u3c2
+        autoconnect=true
+        autoconnect-priority=10
+
+        [ipv4]
+        method=auto
+
+        [ipv6]
+        addr-gen-mode=stable-privacy
+        method=auto
+      '';
+    };
   };
 
   systemd.tmpfiles.rules = [

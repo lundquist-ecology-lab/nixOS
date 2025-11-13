@@ -6,7 +6,7 @@
     border-radius: 12px;
     font-family: "JetbrainsMono Nerd Font", Helvetica, Arial, sans-serif;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 10px;
     min-height: 0;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -20,8 +20,8 @@ window#waybar {
 }
 
 #custom-polycat {
-    font-size: 16px;
-    padding: 8px 0;
+    font-size: 12px;
+    padding: 6px 0;
 }
 
 /* Workspace styling */
@@ -241,4 +241,3 @@ tooltip.background {
     background-color: transparent;
     color: #f1fa8c; /* Yellow color like in your existing style */
 }
-

@@ -207,6 +207,7 @@ in
       vimAlias = true;
       defaultEditor = true;
       extraPackages = with pkgs; [
+        git             # Required by lazy.nvim for plugin installation
         tree-sitter
         python311Packages.pynvim
         # Language servers

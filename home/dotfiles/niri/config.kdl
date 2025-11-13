@@ -200,6 +200,7 @@ binds {
     Mod+E { spawn "kitty" "-e" "spotify_player"; }
     Mod+Y { spawn "kitty" "-e" "cava"; }
     Mod+Z { spawn "kitty" "-e" "bash" "-i" "-c" "fastfetch; exec zsh"; }
+    Mod+P { spawn "jellyfinmediaplayer"; }
     Mod+Equal { spawn "galculator"; }
     Mod+Shift+U { spawn "kitty" "-e" "/home/mlundquist/bin/clock.sh"; }
 

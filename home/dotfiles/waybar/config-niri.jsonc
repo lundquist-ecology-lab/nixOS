@@ -14,7 +14,7 @@
   // Note: Niri doesn't have a waybar workspace module yet, so we omit workspaces
   "modules-left": ["custom/polycat"],
   "modules-center": [],
-  "modules-right": ["pulseaudio", "bluetooth", "custom/brightness", "tray", "clock"],
+  "modules-right": ["pulseaudio", "bluetooth", "custom/brightness", "battery", "tray", "clock"],
 
   "custom/polycat": {
     "format": "{}",
@@ -115,6 +115,22 @@
     "on-click-right": "~/.config/waybar/scripts/update-brightness.sh set 100",
     "interval": 2,
     "signal": 8
+  },
+
+  // Battery
+  "battery": {
+    "interval": 30,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-charging": "󰂄",
+    "format-plugged": "󰚥",
+    "format-full": "󰁹",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip": true,
+    "tooltip-format": "Battery: {capacity}%\nTime: {time}\nPower: {power}W"
   },
 
   // System tray

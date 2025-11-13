@@ -32,7 +32,13 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedUDPPorts = [ 53 67 ];
+      # Default deny incoming (already the default)
+      # Default allow outgoing (already the default)
+      # Only allow incoming on Tailscale interface
+      trustedInterfaces = [ "tailscale0" ];
+      # Reject all other incoming connections
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
     };
   };
 
@@ -178,10 +184,6 @@
           if pkgs ? pyenv-virtualenv then pkgs.pyenv-virtualenv
           else if unstablePkgs ? pyenv-virtualenv then unstablePkgs.pyenv-virtualenv
           else null;
-        ufwPkg =
-          if pkgs ? ufw then pkgs.ufw
-          else if unstablePkgs ? ufw then unstablePkgs.ufw
-          else null;
         stable = with pkgs; [
           alsa-utils
           atool
@@ -219,6 +221,7 @@
           imv
           inetutils
           iperf3
+          jellyfin-media-player
           kitty
           swww
           mako
@@ -308,8 +311,7 @@
       stable
       ++ unstable
       ++ lib.optional (driverctlPkg != null) driverctlPkg
-      ++ lib.optional (pyenvVirtualenvPkg != null) pyenvVirtualenvPkg
-      ++ lib.optional (ufwPkg != null) ufwPkg;
+      ++ lib.optional (pyenvVirtualenvPkg != null) pyenvVirtualenvPkg;
 
     sessionVariables = {
       EDITOR = "nvim";

@@ -81,7 +81,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "hm-bak";
+              home-manager.backupFileExtension = "backup";
               home-manager.extraSpecialArgs = {
                 inherit unstablePkgs inputs;
                 hostname = "moria";
@@ -103,7 +103,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "hm-bak";
+              home-manager.backupFileExtension = "backup";
               home-manager.extraSpecialArgs = {
                 inherit unstablePkgs inputs;
                 hostname = "office";
@@ -125,7 +125,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "hm-bak";
+              home-manager.backupFileExtension = "backup";
               home-manager.extraSpecialArgs = {
                 inherit unstablePkgs inputs;
                 hostname = "edoras";

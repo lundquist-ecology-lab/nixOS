@@ -244,6 +244,21 @@ in
     };
   };
 
+  systemd.user.services.nm-applet = {
+    Unit = {
+      Description = "NetworkManager applet";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.network-manager-applet}/bin/nm-applet --indicator";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -493,6 +508,8 @@ in
           orca-slicer-bin
           polycat
           pulseaudio
+          network-manager-applet
+          swaybg
           xwayland-satellite
         ]) ++ [
           orcaSlicerSatelliteLauncher

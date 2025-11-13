@@ -12,7 +12,10 @@ in
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "edoras";
+  networking = {
+    hostName = "edoras";
+    networkmanager.wifi.backend = "iwd";
+  };
 
   # CIFS network mounts for edoras
   fileSystems."/mnt/onyx" = {
@@ -69,6 +72,7 @@ in
       };
     };
     thermald.enable = true;
+    iwd.enable = true;
     logind = {
       lidSwitch = "suspend";
       lidSwitchExternalPower = "lock";
@@ -83,6 +87,7 @@ in
         };
       };
     };
+    power-profiles-daemon.enable = lib.mkForce false;
   };
 
   # Laptop-specific boot config

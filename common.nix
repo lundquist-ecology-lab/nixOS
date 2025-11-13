@@ -329,7 +329,7 @@
       ];
       config = {
         common = {
-          default = [ "gtk" ];
+          default = lib.mkDefault [ "gtk" ];
         };
       };
     };

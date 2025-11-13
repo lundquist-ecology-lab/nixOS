@@ -87,7 +87,7 @@ cursor {
 
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "QT_QPA_PLATFORM=wayland"
 spawn-at-startup "mako"
-spawn-at-startup "waybar"
+spawn-at-startup "waybar" "-c" "/home/mlundquist/.config/waybar/config-niri.jsonc"
 spawn-at-startup "swaybg" "-i" "/home/mlundquist/wallpapers/wallpaper.jpg" "-m" "fill"
 spawn-at-startup ""
 

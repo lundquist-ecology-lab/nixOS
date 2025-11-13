@@ -148,8 +148,36 @@ in
   # Greeter configuration files
   environment.etc = {
     "greetd/niri-greeter.kdl".text = ''
-      spawn-at-startup "${pkgs.swww}/bin/swww-daemon"
-      spawn-at-startup "${pkgs.kitty}/bin/kitty" "--start-as=fullscreen" "--config=/etc/greetd/kitty.conf" "${syscGreetPkg}/bin/sysc-greet" "--theme" "paradise"
+      input {
+          keyboard {
+              xkb {
+                  layout "us"
+              }
+          }
+          focus-follows-mouse
+      }
+
+      output "eDP-1" {
+          mode "1920x1200@59.95"
+          scale 1.0
+      }
+
+      layout {
+          gaps 0
+          focus-ring {
+              off
+          }
+          border {
+              off
+          }
+      }
+
+      prefer-no-csd
+
+      cursor {
+          xcursor-theme "rose-pine-hyprcursor"
+          xcursor-size 24
+      }
 
       environment {
           XDG_CACHE_HOME "/var/cache/sysc-greet"
@@ -158,6 +186,9 @@ in
           XCURSOR_THEME "rose-pine-hyprcursor"
           XCURSOR_SIZE "24"
       }
+
+      spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${syscGreetShare}/wallpapers/sysc-greet-paradise.png" "-m" "fill"
+      spawn-at-startup "${pkgs.kitty}/bin/kitty" "--start-as=fullscreen" "--config=/etc/greetd/kitty.conf" "${syscGreetPkg}/bin/sysc-greet" "--theme" "paradise"
     '';
     "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";
     "NetworkManager/system-connections/USB-C Ethernet.nmconnection" = {

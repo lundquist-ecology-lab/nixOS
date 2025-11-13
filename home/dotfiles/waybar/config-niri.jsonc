@@ -1,36 +1,20 @@
 {
   "layer": "top",
-  // "output": "DP-6",
   "exclusive-zone": "true",
   "position": "left",
-  "width": 45,
+  "width": 50,
   "spacing": 4,
   "margin-top": 0,
   "margin-left": 0,
   "margin-right": 0,
   "margin-bottom": 0,
-  "height": "calc(100% - 20px)", // 10px on top and bottom
+  "height": "calc(100% - 20px)",
 
   // Module arrangement (for vertical: top, center, bottom)
-  "modules-left": ["custom/polycat", "hyprland/workspaces"],
+  // Note: Niri doesn't have a waybar workspace module yet, so we omit workspaces
+  "modules-left": ["custom/polycat"],
   "modules-center": [],
-  "modules-right": ["pulseaudio", "bluetooth", "tray", "clock"],
-
-  // Workspaces
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "on-click": "activate",
-    "format-icons": {
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "urgent": "",
-      "default": ""
-    },
-    "sort-by-number": true
-  },
+  "modules-right": ["pulseaudio", "bluetooth", "custom/brightness", "tray", "clock"],
 
   "custom/polycat": {
     "format": "{}",
@@ -113,7 +97,6 @@
       "car": "󰄜",
       "default": ["󰕿", "󰖀", "󰕾"]
     },
-    // "on-click": "pavucontrol",
     "on-click": "kitty -e ncpamixer",
     "on-click-middle": "~/.local/bin/wpctl-cycle-sink.sh source >/dev/null 2>&1",
     "on-click-right": "~/.local/bin/wpctl-cycle-sink.sh sink >/dev/null 2>&1",

@@ -129,6 +129,8 @@ in
     XDG_SESSION_TYPE = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
     QT_QPA_PLATFORM = "wayland";
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "24";
   };
 
   # Greeter configuration
@@ -212,6 +214,7 @@ in
   # Desktop-specific packages
   environment.systemPackages = with pkgs; [
     arduino-cli
+    bibata-cursors
     blender
     blueberry
     bridge-utils
@@ -242,6 +245,7 @@ in
     qgis
     read-edid
     remmina
+    rose-pine-hyprcursor
     sysc-greet
     smartmontools
     swtpm

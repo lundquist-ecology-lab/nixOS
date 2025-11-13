@@ -121,6 +121,9 @@ in
     QT_QPA_PLATFORM = "wayland";
     # Performance tweaks
     mesa_glthread = "true";
+    # Cursor theme
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "24";
   };
 
   # Greeter configuration
@@ -204,6 +207,7 @@ in
   # Desktop-specific packages (AMD-optimized, no NVIDIA)
   environment.systemPackages = with pkgs; [
     arduino-cli
+    bibata-cursors
     blender
     blueberry
     bridge-utils
@@ -232,6 +236,7 @@ in
     qgis
     read-edid
     remmina
+    rose-pine-hyprcursor
     sysc-greet
     smartmontools
     swtpm

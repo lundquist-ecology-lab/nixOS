@@ -1,0 +1,243 @@
+/* Modern Waybar Styling - 1080p Version (office) */
+
+/* Base styling */
+* {
+    border: none;
+    border-radius: 12px;
+    font-family: "JetbrainsMono Nerd Font", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    min-height: 0;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+window#waybar {
+    background-color: rgba(21, 21, 21, 1.0);
+    color: #E8E3E3;
+    border-radius: 0px;
+    margin: 10px 6px;
+    padding: 0 2px;
+}
+
+#custom-polycat {
+    font-size: 12px;
+    padding: 6px 0;
+}
+
+/* Workspace styling */
+#workspaces {
+    margin: 0;
+    border-radius: 0px;
+    background-color: transparent;
+    padding: 0;
+}
+
+#workspaces button {
+    color: #FFFFFF;
+    padding: 0;
+    margin: 0;
+    border-radius: 0px;
+    background-color: transparent;
+    transition: none;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+#workspaces button:hover {
+    background: rgba(66, 66, 66, 0.7);
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+    color: #000000;
+    background-color: #8C977D;
+}
+
+#workspaces button.urgent {
+    background-color: #B66467;
+    color: #151515;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Module styling */
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#bluetooth,
+#pulseaudio,
+#tray,
+#temperature,
+#idle_inhibitor {
+    padding: 8px;
+    margin: 4px 0;
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+/* Module specific styling */
+#clock {
+    color: #D9BC8C;
+    font-weight: bold;
+}
+
+#cpu {
+    color: #8C977D;
+}
+
+#battery {
+    color: #8C977D;
+}
+
+#battery.charging {
+    color: #8C977D;
+    animation: charging 2s infinite alternate;
+}
+
+@keyframes charging {
+    from { opacity: 0.8; }
+    to { opacity: 1; }
+}
+
+#battery.warning:not(.charging) {
+    color: #D9BC8C;
+}
+
+#battery.critical:not(.charging) {
+    color: #B66467;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    to { background-color: rgba(182, 100, 103, 0.2); }
+}
+
+#memory {
+    color: #B66467;
+}
+
+#network {
+    color: #8DA3B9;
+}
+
+#network.disconnected {
+    background-color: rgba(182, 100, 103, 0.6);
+    color: #E8E3E3;
+}
+
+#bluetooth {
+    color: #8AA6A2;
+}
+
+#bluetooth.disabled {
+    color: rgba(138, 166, 162, 0.6);
+}
+
+#pulseaudio {
+    color: #A988B0;
+}
+
+#pulseaudio.muted {
+    color: rgba(169, 136, 176, 0.6);
+    background-color: rgba(40, 40, 40, 0.7);
+}
+
+#temperature {
+    color: #D9BC8C;
+}
+
+#temperature.critical {
+    background-color: rgba(182, 100, 103, 0.6);
+    color: #E8E3E3;
+}
+
+#idle_inhibitor {
+    color: #E8E3E3;
+}
+
+#idle_inhibitor.activated {
+    color: #D9BC8C;
+    background-color: rgba(40, 40, 40, 0.7);
+}
+
+/* Enhanced tray styling */
+#tray {
+    color: #E8E3E3;
+    background-color: transparent;
+}
+
+#tray menu {
+    background-color: #151515;
+    color: #E8E3E3;
+    border-radius: 12px;
+    border: 1px solid rgba(232, 227, 227, 0.1);
+}
+
+/* General tooltip styling for all modules */
+tooltip {
+    background-color: #151515;
+    color: #E8E3E3;
+    border-radius: 12px;
+    border: 1px solid rgba(232, 227, 227, 0.2);
+    padding: 8px 12px;
+}
+
+tooltip label {
+    color: #E8E3E3;
+}
+
+tooltip.background {
+    background-color: #151515;
+    border-radius: 12px;
+    border: 1px solid rgba(232, 227, 227, 0.2);
+}
+
+.tooltip {
+    background-color: #151515;
+    color: #E8E3E3;
+    border-radius: 12px;
+    border: 1px solid rgba(232, 227, 227, 0.2);
+    padding: 8px 12px;
+}
+
+#tray tooltip {
+    background-color: #151515;
+    color: #E8E3E3;
+    border-radius: 12px;
+}
+
+#tray image {
+    -gtk-icon-style: symbolic;
+    -gtk-icon-palette: normal #E8E3E3;
+    padding: 0 5px;
+}
+
+/* Hover effects removed - modules remain clickable */
+
+#custom-volume {
+    padding: 8px 0;
+    margin: 4px 0;
+    border-radius: 0px;
+    background-color: transparent;
+    color: #A988B0; /* Same color as pulseaudio */
+}
+
+#custom-volume.muted {
+    color: rgba(169, 136, 176, 0.6);
+    background-color: rgba(40, 40, 40, 0.7);
+}
+
+
+#custom-brightness {
+    padding: 8px 0;
+    margin: 4px 0;
+    border-radius: 0px;
+    background-color: transparent;
+    color: #f1fa8c; /* Yellow color like in your existing style */
+}

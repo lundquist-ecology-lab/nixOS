@@ -403,6 +403,16 @@ in
     source = ./dotfiles/waybar;
     recursive = true;
   };
+
+  # Override with host-specific waybar styles
+  xdg.configFile."waybar/style.css" = lib.mkIf (hostname == "edoras" || hostname == "moria") {
+    source = ./dotfiles/waybar/style-hidpi.css;
+  };
+
+  xdg.configFile."waybar/style.css" = lib.mkIf (hostname == "office") {
+    source = ./dotfiles/waybar/style-1080p.css;
+  };
+
   xdg.configFile."mako" = {
     source = ./dotfiles/mako;
     recursive = true;

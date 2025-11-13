@@ -429,6 +429,10 @@ in
     source = ./dotfiles/nvim;
     recursive = true;
   };
+  xdg.configFile."niri" = {
+    source = ./dotfiles/niri;
+    recursive = true;
+  };
 
   home.shellAliases = {
     ll = "ls -alF";

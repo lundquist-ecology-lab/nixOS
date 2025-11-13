@@ -1,0 +1,2 @@
+#!/bin/bash
+exec kitty -e bash -i -c "fastfetch; exec zsh"

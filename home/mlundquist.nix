@@ -393,7 +393,8 @@ in
         paradise-gtk-theme
       ];
       utilities = with pkgs; [
-        creality-print
+        orca-slicer-bin
+        polycat
         # Thunar and plugins
         xfce.thunar-volman
         xfce.thunar-archive-plugin

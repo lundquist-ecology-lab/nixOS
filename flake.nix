@@ -39,7 +39,8 @@
           };
           tela-icon-theme = prev.callPackage ./pkgs/tela-icon-theme { };
           paradise-gtk-theme = prev.callPackage ./pkgs/paradise-gtk-theme { };
-          creality-print = prev.callPackage ./pkgs/creality-print { };
+          polycat = prev.callPackage ./pkgs/polycat { };
+          orca-slicer-bin = prev.callPackage ./pkgs/orca-slicer-bin { };
         })
         # Add nix-ai-tools packages
         (final: prev:
@@ -64,6 +65,7 @@
         {
           sysc-greet = pkgsForPackages.sysc-greet;
           default = pkgsForPackages.sysc-greet;
+          orca-slicer-bin = pkgsForPackages.orca-slicer-bin;
         };
 
       nixosConfigurations = {

@@ -115,8 +115,8 @@
     },
     // "on-click": "pavucontrol",
     "on-click": "kitty -e ncpamixer",
-    "on-click-middle": "~/.local/bin/wpctl-cycle-sink.sh >/dev/null 2>&1",
-    "on-click-right": "~/.local/bin/wpctl-cycle-sink.sh >/dev/null 2>&1",
+    "on-click-middle": "~/.local/bin/wpctl-cycle-sink.sh source >/dev/null 2>&1",
+    "on-click-right": "~/.local/bin/wpctl-cycle-sink.sh sink >/dev/null 2>&1",
     "tooltip": true,
     "tooltip-format": "{desc} | {volume}%",
     "return-type": "none",
@@ -141,4 +141,3 @@
     "show-passive-items": true
   }
 }
-

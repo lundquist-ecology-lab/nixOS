@@ -38,6 +38,13 @@
       fi
     done
 
+    if [ -d $out/share/sysc-greet/wallpapers ]; then
+      chmod u+w $out/share/sysc-greet/wallpapers
+    fi
+
+    # Inject the local Paradise wallpaper asset so the greeter matches the host theme
+    install -Dm644 ${./sysc-greet-paradise.png} $out/share/sysc-greet/wallpapers/sysc-greet-paradise.png
+
     if [ -f ${src}/README.md ]; then
       install -Dm644 ${src}/README.md $out/share/doc/sysc-greet/README.md
     fi

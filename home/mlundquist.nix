@@ -251,7 +251,7 @@ in
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.network-manager-applet}/bin/nm-applet --indicator";
+      ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
       Restart = "on-failure";
     };
     Install = {
@@ -508,7 +508,7 @@ in
           orca-slicer-bin
           polycat
           pulseaudio
-          network-manager-applet
+          networkmanagerapplet
           swaybg
           xwayland-satellite
         ]) ++ [

@@ -14,7 +14,27 @@ in
 
   networking = {
     hostName = "edoras";
-    networkmanager.wifi.backend = "iwd";
+    networkmanager = {
+      wifi.backend = "iwd";
+      ensureProfiles = {
+        enable = true;
+        profiles."usb-c-ethernet" = {
+          connection = {
+            id = "USB-C Ethernet";
+            type = "ethernet";
+            interface-name = "enp0s13f0u2u3c2";
+            autoconnect = true;
+            autoconnect-priority = 10;
+          };
+          ipv4.method = "auto";
+          ipv6 = {
+            method = "auto";
+            "addr-gen-mode" = "stable-privacy";
+          };
+        };
+      };
+    };
+    wireless.iwd.enable = true;
   };
 
   # CIFS network mounts for edoras
@@ -72,7 +92,6 @@ in
       };
     };
     thermald.enable = true;
-    iwd.enable = true;
     logind = {
       lidSwitch = "suspend";
       lidSwitchExternalPower = "lock";
@@ -131,6 +150,8 @@ in
       "/run/current-system/sw/share"
       "/usr/share"
     ];
+    XCURSOR_THEME = "rose-pine-hyprcursor";
+    XCURSOR_SIZE = "24";
   };
 
   # Laptop-specific packages
@@ -140,18 +161,21 @@ in
     brightnessctl
     sysc-greet
     texliveFull
+    rose-pine-hyprcursor
   ];
 
   # Greeter configuration files
   environment.etc = {
     "greetd/niri-greeter.kdl".text = ''
       spawn-at-startup "${pkgs.swww}/bin/swww-daemon"
-      spawn-at-startup "${pkgs.kitty}/bin/kitty" "--start-as=fullscreen" "--config=/etc/greetd/kitty.conf" "${syscGreetPkg}/bin/sysc-greet"
+      spawn-at-startup "${pkgs.kitty}/bin/kitty" "--start-as=fullscreen" "--config=/etc/greetd/kitty.conf" "${syscGreetPkg}/bin/sysc-greet" "--theme" "paradise"
 
       environment {
           XDG_CACHE_HOME "/var/cache/sysc-greet"
           XDG_DATA_DIRS "/run/current-system/sw/share:/usr/share"
           HOME "/var/lib/greeter"
+          XCURSOR_THEME "rose-pine-hyprcursor"
+          XCURSOR_SIZE "24"
       }
     '';
     "greetd/kitty.conf".source = "${syscGreetShare}/config/kitty-greeter.conf";

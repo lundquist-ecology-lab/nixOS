@@ -401,6 +401,10 @@ in
     source = ./dotfiles/kitty;
     recursive = true;
   };
+  xdg.configFile."btop" = {
+    source = ./dotfiles/btop;
+    recursive = true;
+  };
   xdg.configFile."wlogout" = {
     source = ./dotfiles/wlogout;
     recursive = true;
@@ -444,6 +448,10 @@ in
   };
   home.file.".local/bin/powermenu.sh" = {
     source = ./dotfiles/.local/bin/powermenu.sh;
+    executable = true;
+  };
+  home.file."bin/clock.sh" = {
+    source = ./dotfiles/bin/clock.sh;
     executable = true;
   };
 

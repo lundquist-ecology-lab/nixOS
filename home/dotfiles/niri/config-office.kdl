@@ -90,7 +90,7 @@ cursor {
 spawn-at-startup "systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "XDG_SESSION_TYPE" "DISPLAY"
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "XDG_SESSION_TYPE" "DISPLAY"
 spawn-at-startup "mako"
-spawn-at-startup "waybar" "-c" "/home/mlundquist/.config/waybar/config-niri.jsonc"
+spawn-at-startup "waybar" "-c" "/home/mlundquist/.config/waybar/config-niri-office.jsonc"
 spawn-at-startup "swaybg" "-i" "/home/mlundquist/wallpapers/wallpaper.jpg" "-m" "fill"
 
 

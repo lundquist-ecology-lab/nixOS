@@ -448,6 +448,11 @@ in
     recursive = true;
   };
 
+  # Override with office-specific niri config (narrower waybar)
+  xdg.configFile."niri/config.kdl" = lib.mkIf (hostname == "office") {
+    source = ./dotfiles/niri/config-office.kdl;
+  };
+
   home.shellAliases = {
     ll = "ls -alF";
     la = "ls -A";

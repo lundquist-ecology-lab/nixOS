@@ -457,6 +457,10 @@ in
     source = ./dotfiles/yazi;
     recursive = true;
   };
+  xdg.configFile."zathura" = {
+    source = ./dotfiles/zathura;
+    recursive = true;
+  };
   xdg.configFile."nvim" = {
     source = ./dotfiles/nvim;
     recursive = true;

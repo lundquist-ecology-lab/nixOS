@@ -1,0 +1,63 @@
+# Zathura configuration
+
+# Clipboard settings - enable copying text from PDFs
+set selection-clipboard clipboard
+
+# Appearance
+set recolor false
+set default-bg "#1a1a1a"
+set default-fg "#e0e0e0"
+
+# Notification settings
+set notification-error-bg "#ff5555"
+set notification-error-fg "#ffffff"
+set notification-warning-bg "#ffb86c"
+set notification-warning-fg "#000000"
+set notification-bg "#44475a"
+set notification-fg "#f8f8f2"
+
+# Completion colors
+set completion-bg "#282a36"
+set completion-fg "#f8f8f2"
+set completion-highlight-bg "#44475a"
+set completion-highlight-fg "#f8f8f2"
+set completion-group-bg "#282a36"
+set completion-group-fg "#6272a4"
+
+# Index mode (TOC) colors
+set index-bg "#282a36"
+set index-fg "#f8f8f2"
+set index-active-bg "#44475a"
+set index-active-fg "#f8f8f2"
+
+# Input bar colors
+set inputbar-bg "#282a36"
+set inputbar-fg "#f8f8f2"
+
+# Status bar colors
+set statusbar-bg "#282a36"
+set statusbar-fg "#f8f8f2"
+
+# Highlight colors for search
+set highlight-color "#ffb86c"
+set highlight-active-color "#ff79c6"
+
+# Recolor mode colors (for night reading)
+set recolor-lightcolor "#282a36"
+set recolor-darkcolor "#f8f8f2"
+
+# Page settings
+set page-padding 5
+set adjust-open "width"
+set scroll-step 100
+
+# Zoom settings
+set zoom-min 10
+set zoom-max 1000
+set zoom-step 10
+
+# Enable incremental search
+set incremental-search true
+
+# Smooth scrolling
+set smooth-scroll true

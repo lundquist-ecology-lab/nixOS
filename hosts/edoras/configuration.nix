@@ -142,7 +142,6 @@ in
     brightnessctl
     sysc-greet
     texliveFull
-    rose-pine-hyprcursor
     bibata-cursors  # X11 cursor theme for Niri
   ];
 

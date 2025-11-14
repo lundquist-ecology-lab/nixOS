@@ -245,7 +245,6 @@ in
     qgis
     read-edid
     remmina
-    rose-pine-hyprcursor
     sysc-greet
     smartmontools
     swtpm

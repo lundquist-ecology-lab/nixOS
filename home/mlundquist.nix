@@ -514,7 +514,6 @@ in
           gemini-cli
         ];
       themePackages = with pkgs; [
-        rose-pine-hyprcursor
         tela-icon-theme
         paradise-gtk-theme
       ];

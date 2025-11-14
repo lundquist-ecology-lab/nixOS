@@ -217,6 +217,8 @@ in
         nodePackages.bash-language-server
         nodePackages.typescript-language-server
         pyright         # Python LSP
+        # Treesitter grammars
+        vimPlugins.nvim-treesitter.withAllGrammars
       ];
     };
   };

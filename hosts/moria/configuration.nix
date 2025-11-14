@@ -328,5 +328,7 @@ in
     "L /usr/share/wayland-sessions - - - - /etc/wayland-sessions"
     "d /run/current-system/sw/share/wayland-sessions 0755 root root -"
     "L /run/current-system/sw/share/wayland-sessions/hyprland.desktop - - - - /etc/wayland-sessions/hyprland.desktop"
+    # Create SMB credentials file if it doesn't exist (with placeholder content)
+    "f /root/.smbcredentials 0600 root root - username=CHANGEME\npassword=CHANGEME\n"
   ];
 }

@@ -39,31 +39,12 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     event = "BufReadPost",
-    run = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
+        -- On NixOS, parsers are provided by the system, not installed by treesitter
+        auto_install = false,
         sync_install = false,
-        ensure_installed = {
-          "html",
-          "latex",
-          "markdown",
-          "markdown_inline",
-          "yaml",
-          "python",
-          "r",
-          "css",
-          "json",
-          "lua",
-          "bash",
-          "rust",
-          "go",
-          "dockerfile",
-          "toml",
-          "javascript",
-          "typescript",
-          "c",
-          "cpp",
-        },
+        ensure_installed = {},  -- Don't try to install parsers
         highlight = { enable = true },
         indent    = { enable = true },
       })

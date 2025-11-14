@@ -213,6 +213,7 @@ in
         # Language servers
         texlab          # LaTeX LSP
         lua-language-server
+        marksman        # Markdown LSP
         nil             # Nix LSP
         nodePackages.bash-language-server
         nodePackages.typescript-language-server
@@ -303,6 +304,8 @@ in
         "application/json" = [ "nvim.desktop" ];
         "application/xml" = [ "nvim.desktop" ];
         "application/x-yaml" = [ "nvim.desktop" ];
+        # PDF files
+        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       };
     };
 
@@ -527,6 +530,7 @@ in
           networkmanagerapplet
           swaybg
           xwayland-satellite
+          zathura  # Lightweight PDF viewer for Wayland/Hyprland
         ]) ++ [
           orcaSlicerSatelliteLauncher
         ];

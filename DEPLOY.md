@@ -7,7 +7,7 @@ Use this checklist whenever you reinstall the machine and want the existing Arch
 1. Sync live dotfiles into the flake (run on Arch):
    ```bash
    rsync -a --delete ~/.config/hypr/ ~/nixos-moria/home/dotfiles/hypr/
-   # repeat for waybar, mako, dunst, kitty, wlogout, wofi, spotify-player, yazi, nvim
+   # repeat for waybar, mako, dunst, kitty, wlogout, wofi, ncspot, yazi, nvim
    cp ~/.tmux.conf ~/nixos-moria/home/dotfiles/tmux.conf
    install -m755 ~/.local/bin/env ~/nixos-moria/home/dotfiles/.local/bin/env
    ```

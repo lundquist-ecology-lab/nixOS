@@ -197,7 +197,7 @@ binds {
     Mod+W { spawn "firefox"; }
     Mod+N { spawn "kitty" "-e" "yazi"; }
     Mod+G { spawn "gamescope" "-w" "1920" "-h" "1200" "-f" "--" "steam"; }
-    Mod+E { spawn "kitty" "-e" "spotify_player"; }
+    Mod+E { spawn "kitty" "-e" "ncspot"; }
     Mod+Y { spawn "kitty" "-e" "cava"; }
     Mod+Z { spawn "kitty" "-e" "bash" "-i" "-c" "fastfetch; exec zsh"; }
     Mod+P { spawn "jellyfinmediaplayer"; }

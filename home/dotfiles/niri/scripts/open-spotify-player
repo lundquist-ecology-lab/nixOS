@@ -1,2 +1,2 @@
 #!/bin/bash
-exec kitty -e spotify_player
+exec kitty -e ncspot

@@ -1,0 +1,8 @@
+use_nerdfont = true
+bitrate = 160
+volume_step = 5
+gapless = true
+notify = true
+
+[audio]
+backend = "pulseaudio"

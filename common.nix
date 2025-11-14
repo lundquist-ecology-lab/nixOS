@@ -272,7 +272,7 @@
           remmina
           ripgrep
           rsync
-          spotify-player
+          ncspot
           swappy
           swayidle
           tailscale

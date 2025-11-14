@@ -441,8 +441,8 @@ in
     source = ./dotfiles/rofi;
     recursive = true;
   };
-  xdg.configFile."spotify-player" = {
-    source = ./dotfiles/spotify-player;
+  xdg.configFile."ncspot" = {
+    source = ./dotfiles/ncspot;
     recursive = true;
   };
   xdg.configFile."yazi" = {

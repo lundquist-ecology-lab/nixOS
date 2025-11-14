@@ -5,4 +5,4 @@ gapless = true
 notify = true
 
 [audio]
-backend = "pulseaudio"
+backend = "rodio"

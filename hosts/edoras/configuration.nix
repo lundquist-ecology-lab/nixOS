@@ -14,8 +14,9 @@ in
 
   networking = {
     hostName = "edoras";
-    networkmanager.wifi.backend = "iwd";
-    wireless.iwd.enable = true;
+    # Use NetworkManager's built-in WiFi (wpa_supplicant) instead of iwd
+    # networkmanager.wifi.backend = "iwd";
+    # wireless.iwd.enable = true;
   };
 
   # CIFS network mounts for edoras

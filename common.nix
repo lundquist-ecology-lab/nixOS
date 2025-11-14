@@ -272,7 +272,7 @@
           remmina
           ripgrep
           rsync
-          ncspot
+          unstablePkgs.ncspot  # Use unstable version for librespot fix (1.3.1+)
           swappy
           swayidle
           tailscale

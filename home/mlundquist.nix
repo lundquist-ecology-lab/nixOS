@@ -206,6 +206,11 @@ in
       viAlias = true;
       vimAlias = true;
       defaultEditor = true;
+      plugins = with pkgs.vimPlugins; [
+        # Install nvim-treesitter with all grammars from Nix
+        # This ensures parsers are available system-wide
+        (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+      ];
       extraPackages = with pkgs; [
         git             # Required by lazy.nvim for plugin installation
         tree-sitter
@@ -218,8 +223,6 @@ in
         nodePackages.bash-language-server
         nodePackages.typescript-language-server
         pyright         # Python LSP
-        # Treesitter grammars
-        vimPlugins.nvim-treesitter.withAllGrammars
       ];
     };
   };

@@ -192,6 +192,7 @@
           btop
           btrfs-progs
           cacert
+          cava
           cifs-utils
           clang
           curl

@@ -225,6 +225,7 @@
           jellyfin-media-player
           kitty
           swww
+          lm_sensors
           mako
           man-db
           mpv

@@ -36,41 +36,12 @@ require("lazy").setup({
       require('plugins.indent_blankline')
     end,
   },
+  -- nvim-treesitter is installed via Nix home-manager (see home/mlundquist.nix)
+  -- This ensures all parsers are available from the system
+  -- We still need to configure it here
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "BufReadPost",
-    run = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        sync_install = false,
-        ensure_installed = {
-          "html",
-          "latex",
-          "markdown",
-          "markdown_inline",
-          "yaml",
-          "python",
-          "r",
-          "css",
-          "json",
-          "lua",
-          "bash",
-          "rust",
-          "go",
-          "dockerfile",
-          "toml",
-          "javascript",
-          "typescript",
-          "c",
-          "cpp",
-        },
-        highlight = { enable = true },
-        indent    = { enable = true },
-      })
-      vim.o.foldmethod = "expr"
-      vim.o.foldexpr   = "nvim_treesitter#foldexpr()"
-      vim.o.foldenable = false
-    end,
+    enabled = false,  -- Disabled because it's managed by Nix
   },
   'RRethy/nvim-base16',
   {

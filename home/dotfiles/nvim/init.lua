@@ -21,6 +21,17 @@ for _, a in ipairs(modules) do
   end
 end
 
+-- Configure nvim-treesitter (installed via Nix)
+pcall(function()
+  require("nvim-treesitter.configs").setup({
+    highlight = { enable = true },
+    indent = { enable = true },
+  })
+  vim.o.foldmethod = "expr"
+  vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+  vim.o.foldenable = false
+end)
+
 -- Auto commands
 api.nvim_create_autocmd({"TermOpen", "TermEnter"}, {
   pattern = "term://*",
